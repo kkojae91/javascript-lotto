@@ -2,17 +2,199 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/js/Lotto.js":
-/*!*************************!*\
-  !*** ./src/js/Lotto.js ***!
-  \*************************/
+/***/ "./src/js/LottoApp.js":
+/*!****************************!*\
+  !*** ./src/js/LottoApp.js ***!
+  \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Lotto)
+/* harmony export */   "default": () => (/* binding */ LottoApp)
+/* harmony export */ });
+/* harmony import */ var _LottoConsumer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LottoConsumer */ "./src/js/LottoConsumer.js");
+/* harmony import */ var _LottoSeller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LottoSeller */ "./src/js/LottoSeller.js");
+/* harmony import */ var _templates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./templates */ "./src/js/templates.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils */ "./src/js/utils.js");
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./dom */ "./src/js/dom.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+
+
+
+
+
+var LottoApp = /*#__PURE__*/function () {
+  function LottoApp(app) {
+    _classCallCheck(this, LottoApp);
+
+    this.$app = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(app);
+    (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].paymentSection());
+    this.$paymentInput = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PAYMENT_INPUT);
+    this.$paymentButton = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PAYMENT_BUTTON);
+    this.$coverTheBackground = null;
+    this.$lottoResultSection = null;
+    this.$restartButton = null;
+    this.$lottoListToggleButton = null;
+    this.lottoConsumer = new _LottoConsumer__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    this.lottoSeller = new _LottoSeller__WEBPACK_IMPORTED_MODULE_1__["default"]();
+    (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$paymentButton, 'click', this.onSubmitPaymentButton.bind(this));
+  }
+
+  _createClass(LottoApp, [{
+    key: "onSubmitRestartButton",
+    value: function onSubmitRestartButton() {
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentInput);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$paymentInput, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentButton);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$paymentButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.initInput)(this.$paymentInput);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_WINNING_NUMBER_SECTION));
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PURCHASED_LOTTO_LIST_SECTION));
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$lottoResultSection);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$coverTheBackground);
+    }
+  }, {
+    key: "onClickExitButton",
+    value: function onClickExitButton(e) {
+      e.preventDefault();
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$lottoResultSection);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$coverTheBackground);
+    }
+  }, {
+    key: "onSubmitLottoResultButton",
+    value: function onSubmitLottoResultButton(e) {
+      try {
+        e.preventDefault();
+
+        var lastWeekNumberList = _toConsumableArray((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_NUMBER_INPUT)).map(function (numberInputElement) {
+          return numberInputElement.valueAsNumber;
+        });
+
+        var lastWeekBonusNumber = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_BONUS_NUMBER_INPUT).valueAsNumber;
+        this.lottoSeller.setLastWeekLottoNumbers((0,_utils__WEBPACK_IMPORTED_MODULE_4__.getValidWinningNumberAndBonusNumber)(lastWeekNumberList, lastWeekBonusNumber));
+        this.lottoSeller.setWinningCount(this.lottoConsumer.getLottoList(), this.lottoSeller.getLastWeekLottoList(), this.lottoSeller.getLastWeekBonusNumber());
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].lottoResultSection(this.lottoSeller.getWinningCount(), (0,_utils__WEBPACK_IMPORTED_MODULE_4__.getRateOfReturn)(this.lottoSeller.totalWinningAmount(), this.lottoSeller.getPurchasedAmount())));
+        this.resultSectionBindEvent();
+        this.$lottoResultSection = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_RESULT_SECTION);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.focusInput)(this.$restartButton);
+      } catch (error) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.alertMessage)(error.message);
+      }
+    }
+  }, {
+    key: "onClickToggleButton",
+    value: function onClickToggleButton() {
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$lottoListToggleButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.TOGGLE_SWITCH);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_LIST), _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DIRECTION_COLUMN);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO).forEach(function (element) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(element, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISPLAY_FLEX);
+      });
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_NUMBER).forEach(function (element) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(element, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.INVISIBLE);
+      });
+    }
+  }, {
+    key: "onSubmitPaymentButton",
+    value: function onSubmitPaymentButton(e) {
+      try {
+        e.preventDefault();
+        var purchasedLottoCount = (0,_utils__WEBPACK_IMPORTED_MODULE_4__.getPurchasedLottoCount)(this.$paymentInput.valueAsNumber, _constants__WEBPACK_IMPORTED_MODULE_3__.MONEY.STANDARD);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$paymentButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentButton);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentInput);
+        this.lottoConsumer.setLottoList(purchasedLottoCount);
+        this.lottoSeller.setPurchasedAmount(purchasedLottoCount);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].purchasedSection(this.lottoConsumer.getLottoList()));
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].lastWeekWinningNumberSection());
+        this.purchasedLottoListSectionBindEvent();
+        this.lastWeekWinningNumberSectionBindEvent();
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.focusInput)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)("[data-input-id=\"".concat(1, "\"]")));
+      } catch (error) {
+        console.log(error);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.alertMessage)(error.message);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.initInput)(this.$paymentInput);
+      }
+    }
+  }, {
+    key: "onKeyUpLastWeekNumberInput",
+    value: function onKeyUpLastWeekNumberInput(_ref) {
+      var target = _ref.target,
+          key = _ref.key;
+
+      if (!target.matches(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_NUMBER_INPUT) && !target.matches(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_BONUS_NUMBER_INPUT)) {
+        return;
+      }
+
+      if (target.value.length >= 2 && target.dataset.inputId !== '7') {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.focusInput)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)("[data-input-id=\"".concat(Number(target.dataset.inputId) + 1, "\"]")));
+      }
+
+      if (target.value.length === 0 && key === 'Backspace' && target.dataset.inputId !== '1') {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.focusInput)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)("[data-input-id=\"".concat(Number(target.dataset.inputId) - 1, "\"]")));
+      }
+    }
+  }, {
+    key: "purchasedLottoListSectionBindEvent",
+    value: function purchasedLottoListSectionBindEvent() {
+      this.$lottoListToggleButton = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_LIST_TOGGLE_BUTTON);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$lottoListToggleButton, 'click', this.onClickToggleButton.bind(this));
+    }
+  }, {
+    key: "lastWeekWinningNumberSectionBindEvent",
+    value: function lastWeekWinningNumberSectionBindEvent() {
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.RESULT_CHECKING_BUTTON), 'click', this.onSubmitLottoResultButton.bind(this));
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindsEventListener)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.WINNING_NUMBER_CONTAINER), 'keyup', this.onKeyUpLastWeekNumberInput.bind(this));
+    }
+  }, {
+    key: "resultSectionBindEvent",
+    value: function resultSectionBindEvent() {
+      this.$restartButton = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.RESTART_BUTTON);
+      this.$coverTheBackground = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.COVER_THE_BACKGROUND);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.EXIT_BUTTON), 'click', this.onClickExitButton.bind(this));
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$coverTheBackground, 'click', this.onClickExitButton.bind(this));
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$restartButton, 'click', this.onSubmitRestartButton.bind(this));
+    }
+  }]);
+
+  return LottoApp;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/LottoConsumer.js":
+/*!*********************************!*\
+  !*** ./src/js/LottoConsumer.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ LottoConsumer)
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/js/utils.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -35,134 +217,232 @@ function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.
 
 
 
-var _lottoNumberList = /*#__PURE__*/new WeakMap();
 
-var Lotto = /*#__PURE__*/function () {
-  function Lotto() {
-    _classCallCheck(this, Lotto);
+var _lottoList = /*#__PURE__*/new WeakMap();
 
-    _classPrivateFieldInitSpec(this, _lottoNumberList, {
+var LottoConsumer = /*#__PURE__*/function () {
+  function LottoConsumer() {
+    _classCallCheck(this, LottoConsumer);
+
+    _classPrivateFieldInitSpec(this, _lottoList, {
       writable: true,
       value: []
     });
   }
 
-  _createClass(Lotto, [{
-    key: "setLotto",
-    value: function setLotto() {
-      _classPrivateFieldSet(this, _lottoNumberList, (0,_utils__WEBPACK_IMPORTED_MODULE_0__.createRandomNumberList)());
+  _createClass(LottoConsumer, [{
+    key: "setLottoList",
+    value: function setLottoList(count) {
+      var _this = this;
+
+      _classPrivateFieldSet(this, _lottoList, Array(count).fill(0).map(function (_, index, list) {
+        return list[index] = _this.createLottoList(count);
+      }));
     }
   }, {
-    key: "getLotto",
-    value: function getLotto() {
-      return _classPrivateFieldGet(this, _lottoNumberList);
+    key: "getLottoList",
+    value: function getLottoList() {
+      return _classPrivateFieldGet(this, _lottoList);
+    }
+  }, {
+    key: "createLottoList",
+    value: function createLottoList() {
+      var shuffleRandomList = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.shuffleArray)((0,_utils__WEBPACK_IMPORTED_MODULE_0__.createRandomNumberList)());
+      return Array(_constants__WEBPACK_IMPORTED_MODULE_1__.LOTTO.LENGTH).fill(0).map(function (_, index, list) {
+        return list[index] = shuffleRandomList.pop();
+      });
     }
   }]);
 
-  return Lotto;
+  return LottoConsumer;
 }();
 
 
 
 /***/ }),
 
-/***/ "./src/js/LottoApp.js":
-/*!****************************!*\
-  !*** ./src/js/LottoApp.js ***!
-  \****************************/
+/***/ "./src/js/LottoSeller.js":
+/*!*******************************!*\
+  !*** ./src/js/LottoSeller.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LottoApp)
+/* harmony export */   "default": () => (/* binding */ LottoSeller)
 /* harmony export */ });
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/js/utils.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
-/* harmony import */ var _Lotto__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Lotto */ "./src/js/Lotto.js");
-/* harmony import */ var _templates__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./templates */ "./src/js/templates.js");
-/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dom */ "./src/js/dom.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "set"); _classApplyDescriptorSet(receiver, descriptor, value); return value; }
+
+function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
 
 
 
+var _lastWeekLottoList = /*#__PURE__*/new WeakMap();
 
+var _lastWeekBonusNumber = /*#__PURE__*/new WeakMap();
 
-var LottoApp = /*#__PURE__*/function () {
-  function LottoApp(app) {
-    _classCallCheck(this, LottoApp);
+var _purchasedAmount = /*#__PURE__*/new WeakMap();
 
-    this.$app = (0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(app);
-    (0,_dom__WEBPACK_IMPORTED_MODULE_4__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_3__["default"].paymentSection);
-    this.purchasedLottoCount = 0;
-    this.purchasedLottoList = [];
-    this.bindEvent();
+var _winningAmount = /*#__PURE__*/new WeakMap();
+
+var _winningCount = /*#__PURE__*/new WeakMap();
+
+var LottoSeller = /*#__PURE__*/function () {
+  function LottoSeller() {
+    _classCallCheck(this, LottoSeller);
+
+    _classPrivateFieldInitSpec(this, _lastWeekLottoList, {
+      writable: true,
+      value: []
+    });
+
+    _classPrivateFieldInitSpec(this, _lastWeekBonusNumber, {
+      writable: true,
+      value: 0
+    });
+
+    _classPrivateFieldInitSpec(this, _purchasedAmount, {
+      writable: true,
+      value: 0
+    });
+
+    _classPrivateFieldInitSpec(this, _winningAmount, {
+      writable: true,
+      value: Object.freeze({
+        firstWinner: 2000000000,
+        secondWinner: 30000000,
+        thirdWinner: 1500000,
+        forthWinner: 50000,
+        fifthWinner: 5000,
+        failed: 0
+      })
+    });
+
+    _classPrivateFieldInitSpec(this, _winningCount, {
+      writable: true,
+      value: {
+        firstWinner: 0,
+        secondWinner: 0,
+        thirdWinner: 0,
+        forthWinner: 0,
+        fifthWinner: 0,
+        failed: 0
+      }
+    });
   }
 
-  _createClass(LottoApp, [{
-    key: "setPurchasedLottoList",
-    value: function setPurchasedLottoList() {
-      for (var i = 0; i < this.purchasedLottoCount; i++) {
-        var lotto = new _Lotto__WEBPACK_IMPORTED_MODULE_2__["default"]();
-        lotto.setLotto();
-        this.purchasedLottoList.push(lotto.getLotto());
-      }
+  _createClass(LottoSeller, [{
+    key: "getLastWeekLottoList",
+    value: function getLastWeekLottoList() {
+      return _classPrivateFieldGet(this, _lastWeekLottoList);
     }
   }, {
-    key: "onClickToggleButton",
-    value: function onClickToggleButton() {
-      (0,_dom__WEBPACK_IMPORTED_MODULE_4__.toggleClassName)((0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$LOTTO_LIST_TOGGLE_BUTTON), _constants__WEBPACK_IMPORTED_MODULE_1__.DOM_STRING.TOGGLE_SWITCH);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_4__.toggleClassName)((0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$LOTTO_LIST), _constants__WEBPACK_IMPORTED_MODULE_1__.DOM_STRING.DIRECTION_COLUMN);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$LOTTO).forEach(function (element) {
-        element.classList.toggle(_constants__WEBPACK_IMPORTED_MODULE_1__.DOM_STRING.DISPLAY_FLEX);
-      });
-      (0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$LOTTO_NUMBER).forEach(function (element) {
-        element.classList.toggle(_constants__WEBPACK_IMPORTED_MODULE_1__.DOM_STRING.INVISIBLE);
-      });
+    key: "getLastWeekBonusNumber",
+    value: function getLastWeekBonusNumber() {
+      return _classPrivateFieldGet(this, _lastWeekBonusNumber);
     }
   }, {
-    key: "onSubmitPayment",
-    value: function onSubmitPayment() {
-      var $paymentInput = (0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$PAYMENT_INPUT);
+    key: "setLastWeekLottoNumbers",
+    value: function setLastWeekLottoNumbers(_ref) {
+      var winningNumberList = _ref.winningNumberList,
+          bonusNumber = _ref.bonusNumber;
 
-      try {
-        this.purchasedLottoCount = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isDivisibleBy)((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isPositiveInteger)($paymentInput.valueAsNumber), _constants__WEBPACK_IMPORTED_MODULE_1__.MONEY.STANDARD);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.toggleClassName)((0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$PAYMENT_BUTTON), _constants__WEBPACK_IMPORTED_MODULE_1__.DOM_STRING.DISABLED);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.disableElement)((0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$PAYMENT_BUTTON));
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.disableElement)((0,_dom__WEBPACK_IMPORTED_MODULE_4__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$PAYMENT_INPUT));
-        this.setPurchasedLottoList();
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_3__["default"].purchasedSection(this.purchasedLottoList));
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_3__["default"].lastWeekWinningNumberSection);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_3__["default"].resultCheckingSection);
-      } catch (error) {
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.alertMessage)(error.message);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_4__.initInput)($paymentInput);
-      }
+      _classPrivateFieldSet(this, _lastWeekLottoList, winningNumberList);
+
+      _classPrivateFieldSet(this, _lastWeekBonusNumber, bonusNumber);
     }
   }, {
-    key: "bindEvent",
-    value: function bindEvent() {
-      (0,_dom__WEBPACK_IMPORTED_MODULE_4__.bindEventListener)({
-        appElement: this.$app,
-        type: 'click',
-        selector: _constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$PAYMENT_BUTTON,
-        callback: this.onSubmitPayment.bind(this)
+    key: "getWinningAmount",
+    value: function getWinningAmount() {
+      return _classPrivateFieldGet(this, _winningAmount);
+    }
+  }, {
+    key: "setPurchasedAmount",
+    value: function setPurchasedAmount(count) {
+      _classPrivateFieldSet(this, _purchasedAmount, count * _constants__WEBPACK_IMPORTED_MODULE_1__.MONEY.STANDARD);
+    }
+  }, {
+    key: "getPurchasedAmount",
+    value: function getPurchasedAmount() {
+      return _classPrivateFieldGet(this, _purchasedAmount);
+    }
+  }, {
+    key: "setWinningCount",
+    value: function setWinningCount(userAllLottoList, lastWeekLottoList, lastWeekBounsNumber) {
+      var _this = this;
+
+      Object.keys(_classPrivateFieldGet(this, _winningCount)).forEach(function (winningKey) {
+        _classPrivateFieldGet(_this, _winningCount)[winningKey] = userAllLottoList.filter(function (userLottoList) {
+          return _this.confirmLottoList(userLottoList, lastWeekLottoList, lastWeekBounsNumber) === _classPrivateFieldGet(_this, _winningAmount)[winningKey];
+        }).length;
       });
-      (0,_dom__WEBPACK_IMPORTED_MODULE_4__.bindEventListener)({
-        appElement: this.$app,
-        type: 'click',
-        selector: _constants__WEBPACK_IMPORTED_MODULE_1__.SELECTOR.$LOTTO_LIST_TOGGLE_BUTTON,
-        callback: this.onClickToggleButton.bind(this)
+    }
+  }, {
+    key: "getWinningCount",
+    value: function getWinningCount() {
+      return _classPrivateFieldGet(this, _winningCount);
+    }
+  }, {
+    key: "confirmLottoList",
+    value: function confirmLottoList(userLottoList, lastWeekLottoList, lastWeekBounsNumber) {
+      var count = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.countingDuplicates)(userLottoList, lastWeekLottoList);
+
+      if (count === 2 || count === 1 || count === 0) {
+        return _classPrivateFieldGet(this, _winningAmount).failed;
+      }
+
+      if (count === 3) {
+        return _classPrivateFieldGet(this, _winningAmount).fifthWinner;
+      }
+
+      if (count === 4) {
+        return _classPrivateFieldGet(this, _winningAmount).forthWinner;
+      }
+
+      if (count === 5 && userLottoList.includes(lastWeekBounsNumber)) {
+        return _classPrivateFieldGet(this, _winningAmount).secondWinner;
+      }
+
+      if (count === 5) {
+        return _classPrivateFieldGet(this, _winningAmount).thirdWinner;
+      }
+
+      return _classPrivateFieldGet(this, _winningAmount).firstWinner;
+    }
+  }, {
+    key: "totalWinningAmount",
+    value: function totalWinningAmount() {
+      var _this2 = this;
+
+      var totalAmountList = Object.keys(_classPrivateFieldGet(this, _winningAmount)).map(function (amountKey) {
+        return _classPrivateFieldGet(_this2, _winningAmount)[amountKey] * _classPrivateFieldGet(_this2, _winningCount)[amountKey];
       });
+      return totalAmountList.reduce(function (sum, amount) {
+        return amount + sum;
+      }, 0);
     }
   }]);
 
-  return LottoApp;
+  return LottoSeller;
 }();
 
 
@@ -178,23 +458,31 @@ var LottoApp = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SELECTOR": () => (/* binding */ SELECTOR),
-/* harmony export */   "DOM_STRING": () => (/* binding */ DOM_STRING),
+/* harmony export */   "CLASS_NAME": () => (/* binding */ CLASS_NAME),
 /* harmony export */   "MONEY": () => (/* binding */ MONEY),
-/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE),
-/* harmony export */   "LOTTO": () => (/* binding */ LOTTO)
+/* harmony export */   "LOTTO": () => (/* binding */ LOTTO),
+/* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE)
 /* harmony export */ });
 var SELECTOR = {
-  $PAYMENT_BUTTON: '#payment-button',
-  $PAYMENT_INPUT: '#payment-input',
-  $LOTTO_LIST_TOGGLE_BUTTON: '#lotto-list-toggle-button',
-  $LOTTO_LIST: '#lotto-list',
-  $LOTTO_NUMBER: '.lotto-number',
-  $LOTTO: '.lotto',
-  $LAST_WEEK_WINNING_NUMBER_SECTION: '#last-week-winning-number-section',
-  $PURCHASED_TOTAL_COUNT: '.purchased-total-count',
-  $RESULT_CHECKING_BUTTON: '#result-checking-button'
+  PAYMENT_BUTTON: '#payment-button',
+  PAYMENT_INPUT: '#payment-input',
+  LOTTO_LIST_TOGGLE_BUTTON: '#lotto-list-toggle-button',
+  LOTTO_LIST: '#lotto-list',
+  LOTTO_NUMBER: '.lotto-number',
+  LOTTO: '.lotto',
+  LAST_WEEK_WINNING_NUMBER_SECTION: '#last-week-winning-number-section',
+  PURCHASED_TOTAL_COUNT: '.purchased-total-count',
+  RESULT_CHECKING_BUTTON: '#result-checking-button',
+  PURCHASED_LOTTO_LIST_SECTION: '#purchased-lotto-list-section',
+  LOTTO_RESULT_SECTION: '#lotto-result-section',
+  COVER_THE_BACKGROUND: '#cover-the-background',
+  LAST_WEEK_NUMBER_INPUT: '.last-week-number-input',
+  LAST_WEEK_BONUS_NUMBER_INPUT: '.last-week-bonus-number-input',
+  RESTART_BUTTON: '#restart-button',
+  EXIT_BUTTON: '#exit-button',
+  WINNING_NUMBER_CONTAINER: '.winning-number-container'
 };
-var DOM_STRING = {
+var CLASS_NAME = {
   DISABLED: 'disabled',
   TOGGLE_SWITCH: 'toggle-switch',
   DIRECTION_COLUMN: 'direction-column',
@@ -204,16 +492,16 @@ var DOM_STRING = {
 var MONEY = {
   STANDARD: 1000
 };
-var ERROR_MESSAGE = {
-  MONEY_OUT_OF_RANGE: "\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC798\uBABB \uC785\uB825 \uD558\uC168\uC2B5\uB2C8\uB2E4. \uAD6C\uC785\uD560 \uAE08\uC561\uC740 ".concat(MONEY.STANDARD, "\uC6D0 \uC774\uC0C1\uC744 \uC785\uB825\uD574\uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4"),
-  MONEY_OUT_OF_STANDARD: "\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC798\uBABB \uC785\uB825 \uD558\uC168\uC2B5\uB2C8\uB2E4. \uAD6C\uC785\uD560 \uAE08\uC561\uC740 ".concat(MONEY.STANDARD, "\uC6D0 \uB2E8\uC704\uB85C \uC785\uB825\uD574\uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4")
-};
 var LOTTO = {
   MIN_NUMBER: 1,
   MAX_NUMBER: 45,
   LENGTH: 6
 };
-
+var ERROR_MESSAGE = {
+  MONEY_OUT_OF_RANGE: "\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC798\uBABB \uC785\uB825 \uD558\uC168\uC2B5\uB2C8\uB2E4. \uAD6C\uC785\uD560 \uAE08\uC561\uC740 ".concat(MONEY.STANDARD, "\uC6D0 \uC774\uC0C1\uC744 \uC785\uB825\uD574\uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4"),
+  MONEY_OUT_OF_STANDARD: "\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC798\uBABB \uC785\uB825 \uD558\uC168\uC2B5\uB2C8\uB2E4. \uAD6C\uC785\uD560 \uAE08\uC561\uC740 ".concat(MONEY.STANDARD, "\uC6D0 \uB2E8\uC704\uB85C \uC785\uB825\uD574\uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4"),
+  NOT_DUPLICATED_NUMBERS: "\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uBC88\uD638\uB294 ".concat(LOTTO.MIN_NUMBER, " ~ ").concat(LOTTO.MAX_NUMBER, " \uC0AC\uC774\uC758 \uC22B\uC790\uB97C \uC911\uBCF5 \uC5C6\uC774 \uC785\uB825\uD574\uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4.")
+};
 
 /***/ }),
 
@@ -228,73 +516,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "getElement": () => (/* binding */ getElement),
 /* harmony export */   "getElements": () => (/* binding */ getElements),
 /* harmony export */   "alertMessage": () => (/* binding */ alertMessage),
-/* harmony export */   "bindEventListener": () => (/* binding */ bindEventListener),
-/* harmony export */   "render": () => (/* binding */ render),
-/* harmony export */   "initInput": () => (/* binding */ initInput),
+/* harmony export */   "removeChildElement": () => (/* binding */ removeChildElement),
+/* harmony export */   "toggleClassName": () => (/* binding */ toggleClassName),
 /* harmony export */   "disableElement": () => (/* binding */ disableElement),
-/* harmony export */   "toggleClassName": () => (/* binding */ toggleClassName)
+/* harmony export */   "focusInput": () => (/* binding */ focusInput),
+/* harmony export */   "initInput": () => (/* binding */ initInput),
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "bindEventListener": () => (/* binding */ bindEventListener),
+/* harmony export */   "bindsEventListener": () => (/* binding */ bindsEventListener)
 /* harmony export */ });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 var getElement = function getElement(selector) {
   return document.querySelector(selector);
 };
-
 var getElements = function getElements(selector) {
   return document.querySelectorAll(selector);
 };
-
 var alertMessage = function alertMessage(message) {
   return alert(message);
 };
-
+var removeChildElement = function removeChildElement(parentElement, childElement) {
+  return parentElement.removeChild(childElement);
+};
 var toggleClassName = function toggleClassName(element, domString) {
   element.classList.toggle(domString);
 };
-
 var disableElement = function disableElement(element) {
   element.disabled = !element.disabled;
 };
-
+var focusInput = function focusInput(element) {
+  return element.focus();
+};
 var initInput = function initInput(inputElement) {
   inputElement.value = '';
   inputElement.focus();
 };
-
 var render = function render(element, template) {
   element.insertAdjacentHTML('beforeend', template);
 };
-
-var bindEventListener = function bindEventListener(_ref) {
-  var appElement = _ref.appElement,
-      type = _ref.type,
-      selector = _ref.selector,
-      callback = _ref.callback;
-
-  var children = _toConsumableArray(getElements(selector));
-
-  var isTarget = function isTarget(target) {
-    return children.includes(target) || target.closest(selector);
-  };
-
-  appElement.addEventListener(type, function (e) {
-    if (!isTarget(e.target)) return;
-    e.preventDefault();
-    callback(e);
-  });
+var bindEventListener = function bindEventListener(selector, type, callback) {
+  selector.addEventListener(type, callback);
 };
-
-
+var bindsEventListener = function bindsEventListener(parentElement, type, callback) {
+  parentElement.addEventListener(type, callback);
+};
 
 /***/ }),
 
@@ -308,8 +572,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var template = {
-  paymentSection: "\n  <h1>\uD83C\uDFB1 \uD589\uC6B4\uC758 \uB85C\uB610</h1>\n  <section id=\"payment-section\">\n    <h2 hidden>\uAD6C\uC785\uD560 \uAE08\uC561</h2>\n    <label for=\"payment-input\">\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n    <form class=\"payment-form\">\n      <input name=\"payment-input\" id=\"payment-input\" type=\"number\" placeholder=\"\uAE08\uC561\" />\n      <button id=\"payment-button\">\uAD6C\uC785</button>\n    </form>\n  </section>\n  ",
+var createTemplate = {
+  paymentSection: function paymentSection() {
+    return "\n    <h1>\uD83C\uDFB1 \uD589\uC6B4\uC758 \uB85C\uB610</h1>\n    <section id=\"payment-section\">\n      <h2 hidden>\uAD6C\uC785\uD560 \uAE08\uC561</h2>\n      <label for=\"payment-input\">\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n      <form class=\"payment-form\">\n        <input name=\"payment-input\" id=\"payment-input\" type=\"number\" placeholder=\"\uAE08\uC561\" min=\"1000\" autofocus />\n        <button id=\"payment-button\">\uAD6C\uC785</button>\n      </form>\n    </section>\n    ";
+  },
   purchasedSection: function purchasedSection(lottoList) {
     var _this = this;
 
@@ -320,10 +586,14 @@ var template = {
   lottoTicketAndNumberElement: function lottoTicketAndNumberElement(lotto) {
     return "\n    <li class=\"lotto\">\n      <p class=\"lotto-ticket\">\uD83C\uDF9F\uFE0F</p>\n      <p class=\"lotto-number invisible\">".concat(lotto.join(', '), "</p>\n    </li>\n    ");
   },
-  lastWeekWinningNumberSection: "\n    <section id=\"last-week-winning-number-section\">\n      <h2 hidden>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638</h2>\n      <p>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638 6\uAC1C\uC640 \uBCF4\uB108\uC2A4 \uBC88\uD638 1\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</p>\n      <div class=\"winning-number-container\">\n        <div class=\"\">\n          <p>\uB2F9\uCCA8 \uBC88\uD638</p>\n          <ul id=\"last-week-number-list\">\n            <li class=\"last-week-number\">\n              <input type=\"number\" class=\"last-week-number-input\" />\n            </li>\n            <li class=\"last-week-number\">\n              <input type=\"number\" class=\"last-week-number-input\" />\n            </li>\n            <li class=\"last-week-number\">\n              <input type=\"number\" class=\"last-week-number-input\" />\n            </li>\n            <li class=\"last-week-number\">\n              <input type=\"number\" class=\"last-week-number-input\" />\n            </li>\n            <li class=\"last-week-number\">\n              <input type=\"number\" class=\"last-week-number-input\" />\n            </li>\n            <li class=\"last-week-number\">\n              <input type=\"number\" class=\"last-week-number-input\" />\n            </li>\n          </ul>\n        </div>\n        <div class=\"last-week-bonus-number-container\">\n          <p>\uBCF4\uB108\uC2A4 \uBC88\uD638</p>\n          <input type=\"number\" id=\"last-week-bonus-number-input\" />\n        </div>\n      </div>\n    </section>\n  ",
-  resultCheckingSection: "\n    <section id=\"result-checking-section\">\n      <h2 hidden>\uACB0\uACFC \uD655\uC778</h2>\n      <button id=\"result-checking-button\">\uACB0\uACFC \uD655\uC778\uD558\uAE30</button>\n    </section>\n  "
+  lastWeekWinningNumberSection: function lastWeekWinningNumberSection() {
+    return "\n    <section id=\"last-week-winning-number-section\">\n      <h2 hidden>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638</h2>\n      <p>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638 6\uAC1C\uC640 \uBCF4\uB108\uC2A4 \uBC88\uD638 1\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</p>\n      <form class=\"winning-number-form\">\n        <div class=\"winning-number-container\">\n          <div class=\"\">\n            <p>\uB2F9\uCCA8 \uBC88\uD638</p>\n            <ul id=\"last-week-number-list\">\n              <li class=\"last-week-number\">\n                <label for=\"last-week-first-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uCCAB \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-first-input\" class=\"last-week-number-input\" data-input-id=\"1\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-second-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB450 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-second-input\" class=\"last-week-number-input\" data-input-id=\"2\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-third-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uC138 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-third-input\" class=\"last-week-number-input\" data-input-id=\"3\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-forth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB124 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-forth-input\" class=\"last-week-number-input\" data-input-id=\"4\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-fifth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB2E4\uC12F \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-fifth-input\" class=\"last-week-number-input\" data-input-id=\"5\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-sixth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uC5EC\uC12F \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-sixth-input\" class=\"last-week-number-input\" data-input-id=\"6\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n            </ul>\n          </div>\n          <div class=\"last-week-bonus-number-container\">\n            <p>\uBCF4\uB108\uC2A4 \uBC88\uD638</p>\n            <label for=\"last-week-bonus-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uBCF4\uB108\uC2A4 \uBC88\uC9F8 \uBC88\uD638</label>\n            <input type=\"number\" class=\"last-week-bonus-number-input\" data-input-id=\"7\" min=\"1\" max=\"45\" maxlength=\"2\"  />\n          </div>\n        </div>\n        <button id=\"result-checking-button\">\uACB0\uACFC \uD655\uC778\uD558\uAE30</button>\n      </form>\n    </section>\n  ";
+  },
+  lottoResultSection: function lottoResultSection(winningCount, rateOfReturn) {
+    return "\n    <div id=\"cover-the-background\"></div>\n    <section id=\"lotto-result-section\">\n      <button id=\"exit-button\"></button>\n      <h2 hidden>\uAD6C\uB9E4\uD55C \uB85C\uB610 \uACB0\uACFC</h2>\n      <table>\n      <caption id=\"lotto-result-table-caption\">\n        \uD83C\uDFC6 \uB2F9\uCCA8 \uD1B5\uACC4 \uD83C\uDFC6\n      </caption>\n      <thead>\n          <tr>\n            <th>\uC77C\uCE58 \uAC2F\uC218</th>\n            <th>\uB2F9\uCCA8\uAE08</th>\n            <th>\uB2F9\uCCA8 \uAC2F\uC218</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>3\uAC1C</td>\n            <td>5,000</td>\n            <td class=\"fifth-winning-count\">".concat(winningCount.fifthWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>4\uAC1C</td>\n            <td>50,000</td>\n            <td class=\"forth-winning-count\">").concat(winningCount.forthWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>5\uAC1C</td>\n            <td>1,500,000</td>\n            <td class=\"third-winning-count\">").concat(winningCount.thirdWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>5\uAC1C+\uBCF4\uB108\uC2A4\uBCFC</td>\n            <td>30,000,000</td>\n            <td class=\"second-winning-count\">").concat(winningCount.secondWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>6\uAC1C</td>\n            <td>2,000,000,000</td>\n            <td class=\"first-winning-count\">").concat(winningCount.firstWinner, "\uAC1C</td>\n          </tr>\n        </tbody>\n        <tfoot>\n          <tr>\n            <td colspan=\"3\" class=\"rate-of-return\">\uB2F9\uC2E0\uC758 \uCD1D \uC218\uC775\uB960\uC740 ").concat(rateOfReturn, "%\uC785\uB2C8\uB2E4.</td>\n          </tr>\n        </tfoot>\n      </table>\n      <button id=\"restart-button\">\uB2E4\uC2DC \uC2DC\uC791\uD558\uAE30</button>\n    </section>\n    ");
+  }
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (template);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createTemplate);
 
 /***/ }),
 
@@ -335,10 +605,18 @@ var template = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "isPositiveInteger": () => (/* binding */ isPositiveInteger),
-/* harmony export */   "isDivisibleBy": () => (/* binding */ isDivisibleBy),
-/* harmony export */   "createRandomNumber": () => (/* binding */ createRandomNumber),
-/* harmony export */   "createRandomNumberList": () => (/* binding */ createRandomNumberList)
+/* harmony export */   "isString": () => (/* binding */ isString),
+/* harmony export */   "isEqualToZero": () => (/* binding */ isEqualToZero),
+/* harmony export */   "isNegativeInteger": () => (/* binding */ isNegativeInteger),
+/* harmony export */   "hasRemainder": () => (/* binding */ hasRemainder),
+/* harmony export */   "getPurchasedLottoCount": () => (/* binding */ getPurchasedLottoCount),
+/* harmony export */   "isOutOfRange": () => (/* binding */ isOutOfRange),
+/* harmony export */   "isDuplicateNumbers": () => (/* binding */ isDuplicateNumbers),
+/* harmony export */   "getValidWinningNumberAndBonusNumber": () => (/* binding */ getValidWinningNumberAndBonusNumber),
+/* harmony export */   "createRandomNumberList": () => (/* binding */ createRandomNumberList),
+/* harmony export */   "shuffleArray": () => (/* binding */ shuffleArray),
+/* harmony export */   "countingDuplicates": () => (/* binding */ countingDuplicates),
+/* harmony export */   "getRateOfReturn": () => (/* binding */ getRateOfReturn)
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -354,39 +632,90 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
-
-var isPositiveInteger = function isPositiveInteger(payment) {
-  if (!Number.isInteger(payment) || payment <= 0) {
+var isString = function isString(payment) {
+  return typeof payment === 'string';
+};
+var isEqualToZero = function isEqualToZero(payment) {
+  return payment === 0;
+};
+var isNegativeInteger = function isNegativeInteger(payment) {
+  return Number.isInteger(payment) && payment < 0;
+};
+var hasRemainder = function hasRemainder(payment, price) {
+  return payment % price !== 0;
+};
+var getPurchasedLottoCount = function getPurchasedLottoCount(payment, price) {
+  if (isString(payment) || isNegativeInteger(payment) || isEqualToZero(payment)) {
     throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.MONEY_OUT_OF_RANGE);
   }
 
-  return payment;
-};
-
-var isDivisibleBy = function isDivisibleBy(payment, price) {
-  if (payment % price !== 0) {
+  if (hasRemainder(payment, price)) {
     throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.MONEY_OUT_OF_STANDARD);
   }
 
   return parseInt(payment / price);
 };
-
-var createRandomNumber = function createRandomNumber(minNumber, maxNumber) {
-  return Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber);
+var isOutOfRange = function isOutOfRange(winningNumberList, bonusNumber) {
+  var winningNumbers = [].concat(_toConsumableArray(winningNumberList), [bonusNumber]);
+  var lottoAllNumberList = Array.from({
+    length: _constants__WEBPACK_IMPORTED_MODULE_0__.LOTTO.MAX_NUMBER
+  }, function (_, index) {
+    return index + 1;
+  });
+  return !winningNumbers.every(function (winningNumber) {
+    return lottoAllNumberList.includes(winningNumber);
+  });
 };
-
-var createRandomNumberList = function createRandomNumberList() {
-  var randomNumbers = new Set();
-
-  while (randomNumbers.size < _constants__WEBPACK_IMPORTED_MODULE_0__.LOTTO.LENGTH) {
-    var randomNumber = createRandomNumber(_constants__WEBPACK_IMPORTED_MODULE_0__.LOTTO.MIN_NUMBER, _constants__WEBPACK_IMPORTED_MODULE_0__.LOTTO.MAX_NUMBER);
-    randomNumbers.add(randomNumber);
+var isDuplicateNumbers = function isDuplicateNumbers(winningNumberList, bonusNumber) {
+  var winningNumbers = [].concat(_toConsumableArray(winningNumberList), [bonusNumber]);
+  return winningNumbers.length !== new Set(winningNumbers).size;
+};
+var getValidWinningNumberAndBonusNumber = function getValidWinningNumberAndBonusNumber(winningNumberList, bonusNumber) {
+  if (isOutOfRange(winningNumberList, bonusNumber) || isDuplicateNumbers(winningNumberList, bonusNumber)) {
+    throw new Error(_constants__WEBPACK_IMPORTED_MODULE_0__.ERROR_MESSAGE.NOT_DUPLICATED_NUMBERS);
   }
 
-  return _toConsumableArray(randomNumbers);
+  return {
+    winningNumberList: winningNumberList,
+    bonusNumber: bonusNumber
+  };
 };
+var createRandomNumberList = function createRandomNumberList() {
+  var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _constants__WEBPACK_IMPORTED_MODULE_0__.LOTTO.MAX_NUMBER;
+  return Array.from({
+    length: length
+  }, function (_, index) {
+    return index + 1;
+  });
+};
+var shuffleArray = function shuffleArray(array) {
+  var currentIndex = array.length;
+  var randomIndex;
 
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    var _ref = [array[randomIndex], array[currentIndex]];
+    array[currentIndex] = _ref[0];
+    array[randomIndex] = _ref[1];
+  }
 
+  return array;
+};
+var countingDuplicates = function countingDuplicates(userLottoList, lastWeekLottoList) {
+  var count = 0;
+  userLottoList.forEach(function (userLottoNumber) {
+    lastWeekLottoList.forEach(function (lastWeekLottoNumber) {
+      if (userLottoNumber === lastWeekLottoNumber) {
+        count++;
+      }
+    });
+  });
+  return count;
+};
+var getRateOfReturn = function getRateOfReturn(totalWinningAmount, purchasedAmount) {
+  return Number(((totalWinningAmount - purchasedAmount) / purchasedAmount * 100).toFixed(2));
+};
 
 /***/ }),
 
@@ -412,13 +741,15 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_URL_IMPORT_0___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/toggle_off.svg */ "./images/toggle_off.svg"), __webpack_require__.b);
 var ___CSS_LOADER_URL_IMPORT_1___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/toggle_on.svg */ "./images/toggle_on.svg"), __webpack_require__.b);
+var ___CSS_LOADER_URL_IMPORT_2___ = new URL(/* asset import */ __webpack_require__(/*! ../../images/exit_button.svg */ "./images/exit_button.svg"), __webpack_require__.b);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap);"]);
 ___CSS_LOADER_EXPORT___.push([module.id, "@import url(https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css);"]);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_0___);
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
+var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* font Roboto */\n/* reset css */\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: #e5e5e5;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n  cursor: default;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  margin-top: 10px;\n  padding: 52px 16px;\n\n  min-height: 727px;\n  width: 414px;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n  padding: 8px 8px;\n\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  margin: 0 10px;\n  color: #8b8b8b;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#payment-section .payment-form #payment-button,\n#result-checking-section #result-checking-button {\n  background-color: #00bcd4;\n  color: white;\n  border-radius: 4px;\n  font-weight: 700;\n  font-size: 14px;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n  max-width: 320px;\n  gap: 8px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  width: 34px;\n  height: 36px;\n  border-radius: 4px;\n  padding: 0;\n  text-align: center;\n}\n\n/* *********************** */\n/* result-checking-section */\n/* *********************** */\n#result-checking-section {\n  display: flex;\n}\n\n#result-checking-section #result-checking-button {\n  flex-grow: 1;\n  padding: 6px 6px 8px;\n  height: 36px;\n}\n\n.switch {\n  position: relative;\n  display: inline-block;\n  width: 34px;\n  height: 14px;\n}\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"AAAA,gBAAgB;AAEhB,cAAc;;AAGd;EACE,sBAAsB;AACxB;;AAEA;EACE,iCAAiC;AACnC;;AAEA;EACE,aAAa;EACb,uBAAuB;EACvB,mBAAmB;EACnB,yBAAyB;AAC3B;;AAEA,WAAW;AACX,WAAW;AACX,WAAW;AACX;;EAEE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,0BAA0B;AAC5B;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,wBAAwB;AAC1B;;AAEA;EACE,0BAA0B;EAC1B,YAAY;AACd;;AAEA;EACE,mBAAmB;EACnB,YAAY;EACZ,gBAAgB;EAChB,UAAU;EACV,iBAAiB;EACjB,eAAe;AACjB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,yBAAyB;EACzB,YAAY;EACZ,eAAe;AACjB;;AAEA;EACE,aAAa;EACb,sBAAsB;;EAEtB,qCAAqC;EACrC,kBAAkB;EAClB,uBAAuB;;EAEvB,gBAAgB;EAChB,kBAAkB;;EAElB,iBAAiB;EACjB,YAAY;AACd;;AAEA;EACE,eAAe;EACf,gBAAgB;EAChB,iBAAiB;;EAEjB,kBAAkB;;EAElB,mBAAmB;AACrB;;AAEA,oBAAoB;AACpB,oBAAoB;AACpB,oBAAoB;AACpB;EACE,mBAAmB;AACrB;;AAEA;EACE,cAAc;EACd,kBAAkB;AACpB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,YAAY;;EAEZ,kBAAkB;EAClB,gBAAgB;;EAEhB,kBAAkB;AACpB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,cAAc;EACd,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,YAAY;AACd;;AAEA;;EAEE,yBAAyB;EACzB,YAAY;EACZ,kBAAkB;EAClB,gBAAgB;EAChB,eAAe;AACjB;;AAEA,iCAAiC;AACjC,iCAAiC;AACjC,iCAAiC;AACjC;EACE,aAAa;EACb,8BAA8B;EAC9B,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,eAAe;EACf,gBAAgB;EAChB,QAAQ;AACV;;AAEA;;;EAGE,sBAAsB;EACtB,QAAQ;AACV;;AAEA;EACE,gBAAgB;EAChB,eAAe;EACf,iBAAiB;AACnB;;AAEA;;;;EAIE,aAAa;EACb,mBAAmB;AACrB;;AAEA;;;;;EAKE,iBAAiB;AACnB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,qBAAqB;AACvB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;EACZ,yDAAoD;EACpD,wBAAwB;EACxB,4BAA4B;AAC9B;;AAEA;EACE,yDAAmD;AACrD;;AAEA,qCAAqC;AACrC,qCAAqC;AACrC,qCAAqC;AACrC;EACE,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,8BAA8B;AAChC;;AAEA;;;EAGE,aAAa;EACb,QAAQ;AACV;;AAEA;;;EAGE,aAAa;EACb,sBAAsB;EACtB,qBAAqB;AACvB;;AAEA;;;;;;;EAOE,WAAW;EACX,YAAY;EACZ,kBAAkB;EAClB,UAAU;EACV,kBAAkB;AACpB;;AAEA,4BAA4B;AAC5B,4BAA4B;AAC5B,4BAA4B;AAC5B;EACE,aAAa;AACf;;AAEA;EACE,YAAY;EACZ,oBAAoB;EACpB,YAAY;AACd;;AAEA;EACE,kBAAkB;EAClB,qBAAqB;EACrB,WAAW;EACX,YAAY;AACd","sourcesContent":["/* font Roboto */\n@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');\n/* reset css */\n@import url('https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css');\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: #e5e5e5;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n  cursor: default;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  margin-top: 10px;\n  padding: 52px 16px;\n\n  min-height: 727px;\n  width: 414px;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n  padding: 8px 8px;\n\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  margin: 0 10px;\n  color: #8b8b8b;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#payment-section .payment-form #payment-button,\n#result-checking-section #result-checking-button {\n  background-color: #00bcd4;\n  color: white;\n  border-radius: 4px;\n  font-weight: 700;\n  font-size: 14px;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n  max-width: 320px;\n  gap: 8px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n  background-image: url('../../images/toggle_off.svg');\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url('../../images/toggle_on.svg');\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  width: 34px;\n  height: 36px;\n  border-radius: 4px;\n  padding: 0;\n  text-align: center;\n}\n\n/* *********************** */\n/* result-checking-section */\n/* *********************** */\n#result-checking-section {\n  display: flex;\n}\n\n#result-checking-section #result-checking-button {\n  flex-grow: 1;\n  padding: 6px 6px 8px;\n  height: 36px;\n}\n\n.switch {\n  position: relative;\n  display: inline-block;\n  width: 34px;\n  height: 14px;\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* font Roboto */\n/* reset css */\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  background-color: #e5e5e5;\n  height: 100vh;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n\n  cursor: default;\n}\n\n#payment-section .payment-form #payment-button.disabled:hover {\n  background-color: #828282;\n  opacity: 0.6;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  position: relative;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  height: 727px;\n  width: 414px;\n  padding: 52px 16px;\n\n  overflow: scroll;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n\n  padding: 8px 8px;\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: #8b8b8b;\n\n  margin: 0 10px;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#lotto-result-section #restart-button,\n#payment-section .payment-form #payment-button,\n#last-week-winning-number-section #result-checking-button {\n  font-weight: 700;\n  font-size: 14px;\n  color: white;\n\n  background-color: #00bcd4;\n\n  border-radius: 4px;\n  transition: all 300ms ease-in-out;\n}\n\n#lotto-result-section #restart-button:hover,\n#payment-section .payment-form #payment-button:hover,\n#last-week-winning-number-section #result-checking-button:hover {\n  background-color: #80deea;\n}\n\n#lotto-result-section #restart-button:active,\n#payment-section .payment-form #payment-button:active,\n#last-week-winning-number-section #result-checking-button:active {\n  transform: translateY(2px);\n}\n\n#lotto-result-section #restart-button:focus {\n  outline: none;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n\n  gap: 8px;\n  max-width: 320px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  transition: all 300ms ease-in-out;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:hover,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:hover {\n  opacity: 85%;\n  transform: scale(1.05);\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:active,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:active {\n  transform: translateY(1px);\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  text-align: center;\n\n  width: 34px;\n  height: 36px;\n  padding: 0;\n\n  border-radius: 4px;\n}\n\n#last-week-winning-number-section #result-checking-button {\n  width: 100%;\n  margin-top: 24px;\n  height: 36px;\n  padding: 6px 6px 8px;\n}\n\n/* ******************** */\n/* lotto-result-section */\n/* ******************** */\n#lotto-result-section {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n\n  width: 350px;\n  height: 500px;\n\n  padding: 0 16px;\n\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n\n  border: 1px solid black;\n  border-radius: 4px;\n}\n\n#lotto-result-section #exit-button {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n\n  position: absolute;\n  top: 16px;\n  right: 16px;\n\n  width: 14px;\n  height: 14px;\n}\n\n#lotto-result-section table {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n\n  width: 100%;\n  margin-bottom: 32px;\n}\n\n#lotto-result-section table #lotto-result-table-caption {\n  font-size: 20px;\n  font-weight: 600;\n  line-height: 24px;\n  letter-spacing: 0.15px;\n\n  margin: 40px 0 32px;\n}\n\n#lotto-result-section table thead {\n  font-weight: 600;\n}\n\n#lotto-result-section table tr {\n  border-top: 1px solid #dcdcdc;\n  border-bottom: 1px solid #dcdcdc;\n}\n\n#lotto-result-section table th,\n#lotto-result-section table td {\n  text-align: center;\n  padding: 8px 0;\n}\n\n#lotto-result-section table tfoot td {\n  font-weight: 600;\n  padding: 16px 0 0;\n}\n\n#lotto-result-section table tfoot tr {\n  border-bottom: none;\n}\n\n#lotto-result-section #restart-button {\n  display: block;\n\n  line-height: 16px;\n  letter-spacing: 1.25px;\n\n  width: 152px;\n  height: 36px;\n\n  padding: 6px 6px 6px 8px;\n  margin: 32px auto 49px;\n}\n\n/* ******************** */\n/* cover-the-background */\n/* ******************** */\n#cover-the-background {\n  position: fixed;\n\n  top: 50%;\n  left: 50%;\n\n  transform: translate(-50%, -50%);\n\n  height: 727px;\n  width: 414px;\n\n  background-color: rgba(0, 0, 0, 0.5);\n}\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"AAAA,gBAAgB;AAEhB,cAAc;;AAGd;EACE,sBAAsB;AACxB;;AAEA;EACE,iCAAiC;AACnC;;AAEA;EACE,aAAa;EACb,uBAAuB;EACvB,mBAAmB;;EAEnB,yBAAyB;EACzB,aAAa;AACf;;AAEA,WAAW;AACX,WAAW;AACX,WAAW;AACX;;EAEE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,0BAA0B;AAC5B;;AAEA;EACE,yBAAyB;AAC3B;;AAEA;EACE,wBAAwB;AAC1B;;AAEA;EACE,0BAA0B;EAC1B,YAAY;AACd;;AAEA;EACE,mBAAmB;EACnB,YAAY;EACZ,gBAAgB;EAChB,UAAU;EACV,iBAAiB;EACjB,eAAe;AACjB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,yBAAyB;EACzB,YAAY;;EAEZ,eAAe;AACjB;;AAEA;EACE,yBAAyB;EACzB,YAAY;AACd;;AAEA;EACE,aAAa;EACb,sBAAsB;;EAEtB,kBAAkB;;EAElB,qCAAqC;EACrC,kBAAkB;EAClB,uBAAuB;;EAEvB,aAAa;EACb,YAAY;EACZ,kBAAkB;;EAElB,gBAAgB;AAClB;;AAEA;EACE,eAAe;EACf,gBAAgB;EAChB,iBAAiB;EACjB,kBAAkB;;EAElB,mBAAmB;AACrB;;AAEA,oBAAoB;AACpB,oBAAoB;AACpB,oBAAoB;AACpB;EACE,mBAAmB;AACrB;;AAEA;EACE,cAAc;;EAEd,kBAAkB;AACpB;;AAEA;EACE,aAAa;AACf;;AAEA;EACE,YAAY;;EAEZ,kBAAkB;;EAElB,gBAAgB;EAChB,kBAAkB;AACpB;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;EACrB,cAAc;;EAEd,cAAc;AAChB;;AAEA;EACE,WAAW;EACX,YAAY;AACd;;AAEA;;;EAGE,gBAAgB;EAChB,eAAe;EACf,YAAY;;EAEZ,yBAAyB;;EAEzB,kBAAkB;EAClB,iCAAiC;AACnC;;AAEA;;;EAGE,yBAAyB;AAC3B;;AAEA;;;EAGE,0BAA0B;AAC5B;;AAEA;EACE,aAAa;AACf;;AAEA,iCAAiC;AACjC,iCAAiC;AACjC,iCAAiC;AACjC;EACE,aAAa;EACb,8BAA8B;;EAE9B,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,eAAe;;EAEf,QAAQ;EACR,gBAAgB;AAClB;;AAEA;;;EAGE,sBAAsB;;EAEtB,QAAQ;AACV;;AAEA;EACE,gBAAgB;EAChB,eAAe;EACf,iBAAiB;AACnB;;AAEA;;;;EAIE,aAAa;EACb,mBAAmB;AACrB;;AAEA;;;;;EAKE,iBAAiB;AACnB;;AAEA;EACE,aAAa;EACb,sBAAsB;EACtB,qBAAqB;AACvB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,WAAW;EACX,YAAY;;EAEZ,yDAAoD;EACpD,wBAAwB;EACxB,4BAA4B;AAC9B;;AAEA;EACE,yDAAmD;EACnD,iCAAiC;AACnC;;AAEA;;EAEE,YAAY;EACZ,sBAAsB;AACxB;;AAEA;;EAEE,0BAA0B;AAC5B;;AAEA,qCAAqC;AACrC,qCAAqC;AACrC,qCAAqC;AACrC;EACE,mBAAmB;AACrB;;AAEA;EACE,kBAAkB;AACpB;;AAEA;EACE,aAAa;EACb,8BAA8B;AAChC;;AAEA;;;EAGE,aAAa;;EAEb,QAAQ;AACV;;AAEA;;;EAGE,aAAa;EACb,sBAAsB;EACtB,qBAAqB;AACvB;;AAEA;;;;;;;EAOE,kBAAkB;;EAElB,WAAW;EACX,YAAY;EACZ,UAAU;;EAEV,kBAAkB;AACpB;;AAEA;EACE,WAAW;EACX,gBAAgB;EAChB,YAAY;EACZ,oBAAoB;AACtB;;AAEA,yBAAyB;AACzB,yBAAyB;AACzB,yBAAyB;AACzB;EACE,eAAe;EACf,QAAQ;EACR,SAAS;;EAET,YAAY;EACZ,aAAa;;EAEb,eAAe;;EAEf,gCAAgC;EAChC,sBAAsB;;EAEtB,uBAAuB;EACvB,kBAAkB;AACpB;;AAEA;EACE,yDAAqD;;EAErD,kBAAkB;EAClB,SAAS;EACT,WAAW;;EAEX,WAAW;EACX,YAAY;AACd;;AAEA;EACE,eAAe;EACf,iBAAiB;EACjB,qBAAqB;;EAErB,WAAW;EACX,mBAAmB;AACrB;;AAEA;EACE,eAAe;EACf,gBAAgB;EAChB,iBAAiB;EACjB,sBAAsB;;EAEtB,mBAAmB;AACrB;;AAEA;EACE,gBAAgB;AAClB;;AAEA;EACE,6BAA6B;EAC7B,gCAAgC;AAClC;;AAEA;;EAEE,kBAAkB;EAClB,cAAc;AAChB;;AAEA;EACE,gBAAgB;EAChB,iBAAiB;AACnB;;AAEA;EACE,mBAAmB;AACrB;;AAEA;EACE,cAAc;;EAEd,iBAAiB;EACjB,sBAAsB;;EAEtB,YAAY;EACZ,YAAY;;EAEZ,wBAAwB;EACxB,sBAAsB;AACxB;;AAEA,yBAAyB;AACzB,yBAAyB;AACzB,yBAAyB;AACzB;EACE,eAAe;;EAEf,QAAQ;EACR,SAAS;;EAET,gCAAgC;;EAEhC,aAAa;EACb,YAAY;;EAEZ,oCAAoC;AACtC","sourcesContent":["/* font Roboto */\n@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');\n/* reset css */\n@import url('https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css');\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  background-color: #e5e5e5;\n  height: 100vh;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n\n  cursor: default;\n}\n\n#payment-section .payment-form #payment-button.disabled:hover {\n  background-color: #828282;\n  opacity: 0.6;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  position: relative;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  height: 727px;\n  width: 414px;\n  padding: 52px 16px;\n\n  overflow: scroll;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n\n  padding: 8px 8px;\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: #8b8b8b;\n\n  margin: 0 10px;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#lotto-result-section #restart-button,\n#payment-section .payment-form #payment-button,\n#last-week-winning-number-section #result-checking-button {\n  font-weight: 700;\n  font-size: 14px;\n  color: white;\n\n  background-color: #00bcd4;\n\n  border-radius: 4px;\n  transition: all 300ms ease-in-out;\n}\n\n#lotto-result-section #restart-button:hover,\n#payment-section .payment-form #payment-button:hover,\n#last-week-winning-number-section #result-checking-button:hover {\n  background-color: #80deea;\n}\n\n#lotto-result-section #restart-button:active,\n#payment-section .payment-form #payment-button:active,\n#last-week-winning-number-section #result-checking-button:active {\n  transform: translateY(2px);\n}\n\n#lotto-result-section #restart-button:focus {\n  outline: none;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n\n  gap: 8px;\n  max-width: 320px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n\n  background-image: url('../../images/toggle_off.svg');\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url('../../images/toggle_on.svg');\n  transition: all 300ms ease-in-out;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:hover,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:hover {\n  opacity: 85%;\n  transform: scale(1.05);\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:active,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:active {\n  transform: translateY(1px);\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  text-align: center;\n\n  width: 34px;\n  height: 36px;\n  padding: 0;\n\n  border-radius: 4px;\n}\n\n#last-week-winning-number-section #result-checking-button {\n  width: 100%;\n  margin-top: 24px;\n  height: 36px;\n  padding: 6px 6px 8px;\n}\n\n/* ******************** */\n/* lotto-result-section */\n/* ******************** */\n#lotto-result-section {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n\n  width: 350px;\n  height: 500px;\n\n  padding: 0 16px;\n\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n\n  border: 1px solid black;\n  border-radius: 4px;\n}\n\n#lotto-result-section #exit-button {\n  background-image: url('../../images/exit_button.svg');\n\n  position: absolute;\n  top: 16px;\n  right: 16px;\n\n  width: 14px;\n  height: 14px;\n}\n\n#lotto-result-section table {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n\n  width: 100%;\n  margin-bottom: 32px;\n}\n\n#lotto-result-section table #lotto-result-table-caption {\n  font-size: 20px;\n  font-weight: 600;\n  line-height: 24px;\n  letter-spacing: 0.15px;\n\n  margin: 40px 0 32px;\n}\n\n#lotto-result-section table thead {\n  font-weight: 600;\n}\n\n#lotto-result-section table tr {\n  border-top: 1px solid #dcdcdc;\n  border-bottom: 1px solid #dcdcdc;\n}\n\n#lotto-result-section table th,\n#lotto-result-section table td {\n  text-align: center;\n  padding: 8px 0;\n}\n\n#lotto-result-section table tfoot td {\n  font-weight: 600;\n  padding: 16px 0 0;\n}\n\n#lotto-result-section table tfoot tr {\n  border-bottom: none;\n}\n\n#lotto-result-section #restart-button {\n  display: block;\n\n  line-height: 16px;\n  letter-spacing: 1.25px;\n\n  width: 152px;\n  height: 36px;\n\n  padding: 6px 6px 6px 8px;\n  margin: 32px auto 49px;\n}\n\n/* ******************** */\n/* cover-the-background */\n/* ******************** */\n#cover-the-background {\n  position: fixed;\n\n  top: 50%;\n  left: 50%;\n\n  transform: translate(-50%, -50%);\n\n  height: 727px;\n  width: 414px;\n\n  background-color: rgba(0, 0, 0, 0.5);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -965,6 +1296,16 @@ module.exports = styleTagTransform;
 
 /***/ }),
 
+/***/ "./images/exit_button.svg":
+/*!********************************!*\
+  !*** ./images/exit_button.svg ***!
+  \********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "fbd1de2f83cda5ed3d38.svg";
+
+/***/ }),
+
 /***/ "./images/toggle_off.svg":
 /*!*******************************!*\
   !*** ./images/toggle_off.svg ***!
@@ -1121,11 +1462,14 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _css_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./css/index */ "./src/css/index.css");
-/* harmony import */ var _js_LottoApp__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/LottoApp */ "./src/js/LottoApp.js");
+/* harmony import */ var _js_LottoApp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/LottoApp */ "./src/js/LottoApp.js");
+/* harmony import */ var _css_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./css/index */ "./src/css/index.css");
 
 
-new _js_LottoApp__WEBPACK_IMPORTED_MODULE_1__["default"]('#app');
+
+(function main() {
+  new _js_LottoApp__WEBPACK_IMPORTED_MODULE_0__["default"]('#app');
+})();
 })();
 
 /******/ })()
