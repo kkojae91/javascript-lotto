@@ -51,10 +51,6 @@ var LottoApp = /*#__PURE__*/function () {
     (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].paymentSection());
     this.$paymentInput = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PAYMENT_INPUT);
     this.$paymentButton = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PAYMENT_BUTTON);
-    this.$coverTheBackground = null;
-    this.$lottoResultSection = null;
-    this.$restartButton = null;
-    this.$lottoListToggleButton = null;
     this.lottoConsumer = new _LottoConsumer__WEBPACK_IMPORTED_MODULE_0__["default"]();
     this.lottoSeller = new _LottoSeller__WEBPACK_IMPORTED_MODULE_1__["default"]();
     (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$paymentButton, 'click', this.onSubmitPaymentButton.bind(this));
@@ -63,22 +59,15 @@ var LottoApp = /*#__PURE__*/function () {
   _createClass(LottoApp, [{
     key: "onSubmitRestartButton",
     value: function onSubmitRestartButton() {
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentInput);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$paymentInput, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentButton);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$paymentButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.enabledElements)([this.$paymentInput, this.$paymentButton], _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
       (0,_dom__WEBPACK_IMPORTED_MODULE_5__.initInput)(this.$paymentInput);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_WINNING_NUMBER_SECTION));
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PURCHASED_LOTTO_LIST_SECTION));
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$lottoResultSection);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$coverTheBackground);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElements)(this.$app, [(0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_WINNING_NUMBER_SECTION), (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.PURCHASED_LOTTO_LIST_SECTION), this.$lottoResultSection, this.$coverTheBackground]);
     }
   }, {
     key: "onClickExitButton",
     value: function onClickExitButton(e) {
       e.preventDefault();
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$lottoResultSection);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElement)(this.$app, this.$coverTheBackground);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.removeChildElements)(this.$app, [this.$lottoResultSection, this.$coverTheBackground]);
     }
   }, {
     key: "onSubmitLottoResultButton",
@@ -86,13 +75,13 @@ var LottoApp = /*#__PURE__*/function () {
       try {
         e.preventDefault();
 
-        var lastWeekNumberList = _toConsumableArray((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_NUMBER_INPUT)).map(function (numberInputElement) {
+        var lastWeekWinningNumberList = _toConsumableArray((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_NUMBER_INPUT)).map(function (numberInputElement) {
           return numberInputElement.valueAsNumber;
         });
 
-        var lastWeekBonusNumber = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_BONUS_NUMBER_INPUT).valueAsNumber;
-        this.lottoSeller.setLastWeekLottoNumbers((0,_utils__WEBPACK_IMPORTED_MODULE_4__.getValidWinningNumberAndBonusNumber)(lastWeekNumberList, lastWeekBonusNumber));
-        this.lottoSeller.setWinningCount(this.lottoConsumer.getLottoList(), this.lottoSeller.getLastWeekLottoList(), this.lottoSeller.getLastWeekBonusNumber());
+        var lastWeekWinningBonusNumber = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LAST_WEEK_BONUS_NUMBER_INPUT).valueAsNumber;
+        this.lottoSeller.setLastWeekWinningLottoNumbers((0,_utils__WEBPACK_IMPORTED_MODULE_4__.getValidWinningNumberAndBonusNumber)(lastWeekWinningNumberList, lastWeekWinningBonusNumber));
+        this.lottoSeller.setWinningCount(this.lottoConsumer.getLottoList(), this.lottoSeller.getLastWeekWinningLottoList(), this.lottoSeller.getLastWeekWinningBonusNumber());
         (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].lottoResultSection(this.lottoSeller.getWinningCount(), (0,_utils__WEBPACK_IMPORTED_MODULE_4__.getRateOfReturn)(this.lottoSeller.totalWinningAmount(), this.lottoSeller.getPurchasedAmount())));
         this.resultSectionBindEvent();
         this.$lottoResultSection = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_RESULT_SECTION);
@@ -104,13 +93,13 @@ var LottoApp = /*#__PURE__*/function () {
   }, {
     key: "onClickToggleButton",
     value: function onClickToggleButton() {
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$lottoListToggleButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.TOGGLE_SWITCH);
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_LIST), _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DIRECTION_COLUMN);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleElement)(this.$lottoListToggleButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.TOGGLE_SWITCH);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleElement)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_LIST), _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DIRECTION_COLUMN);
       (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO).forEach(function (element) {
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(element, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISPLAY_FLEX);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleElement)(element, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISPLAY_FLEX);
       });
       (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_NUMBER).forEach(function (element) {
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(element, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.INVISIBLE);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleElement)(element, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.INVISIBLE);
       });
     }
   }, {
@@ -119,25 +108,23 @@ var LottoApp = /*#__PURE__*/function () {
       try {
         e.preventDefault();
         var purchasedLottoCount = (0,_utils__WEBPACK_IMPORTED_MODULE_4__.getPurchasedLottoCount)(this.$paymentInput.valueAsNumber, _constants__WEBPACK_IMPORTED_MODULE_3__.MONEY.STANDARD);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.toggleClassName)(this.$paymentButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentButton);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disableElement)(this.$paymentInput);
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disabledElements)([this.$paymentButton, this.$paymentInput], _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
         this.lottoConsumer.setLottoList(purchasedLottoCount);
         this.lottoSeller.setPurchasedAmount(purchasedLottoCount);
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].purchasedSection(this.lottoConsumer.getLottoList()));
-        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, _templates__WEBPACK_IMPORTED_MODULE_2__["default"].lastWeekWinningNumberSection());
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.render)(this.$app, "".concat(_templates__WEBPACK_IMPORTED_MODULE_2__["default"].purchasedSection(this.lottoConsumer.getLottoList()), "\n          ").concat(_templates__WEBPACK_IMPORTED_MODULE_2__["default"].lastWeekWinningNumberSection()));
         this.purchasedLottoListSectionBindEvent();
         this.lastWeekWinningNumberSectionBindEvent();
         (0,_dom__WEBPACK_IMPORTED_MODULE_5__.focusInput)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)("[data-input-id=\"".concat(1, "\"]")));
       } catch (error) {
-        console.log(error);
         (0,_dom__WEBPACK_IMPORTED_MODULE_5__.alertMessage)(error.message);
         (0,_dom__WEBPACK_IMPORTED_MODULE_5__.initInput)(this.$paymentInput);
       }
     }
   }, {
-    key: "onKeyUpLastWeekNumberInput",
-    value: function onKeyUpLastWeekNumberInput(_ref) {
+    key: "onKeyUpLastWeekWinningNumberInput",
+    value: function onKeyUpLastWeekWinningNumberInput(_ref) {
+      var _this = this;
+
       var target = _ref.target,
           key = _ref.key;
 
@@ -152,18 +139,44 @@ var LottoApp = /*#__PURE__*/function () {
       if (target.value.length === 0 && key === 'Backspace' && target.dataset.inputId !== '1') {
         (0,_dom__WEBPACK_IMPORTED_MODULE_5__.focusInput)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)("[data-input-id=\"".concat(Number(target.dataset.inputId) - 1, "\"]")));
       }
+
+      var count = 0;
+
+      _toConsumableArray(this.$winningNumbers).reduce(function (previousWinningNumbers, winningNumberElement) {
+        var currentWinningNumber = winningNumberElement.valueAsNumber;
+
+        if (currentWinningNumber >= _constants__WEBPACK_IMPORTED_MODULE_3__.LOTTO.MIN_NUMBER && currentWinningNumber <= _constants__WEBPACK_IMPORTED_MODULE_3__.LOTTO.MAX_NUMBER && (0,_utils__WEBPACK_IMPORTED_MODULE_4__.isUniqueWinningNumber)({
+          winningNumberElements: _this.$winningNumbers,
+          winningNumberElement: winningNumberElement,
+          previousWinningNumbers: previousWinningNumbers,
+          currentWinningNumber: currentWinningNumber
+        })) {
+          count++;
+        }
+
+        return [].concat(_toConsumableArray(previousWinningNumbers), [currentWinningNumber]);
+      }, []);
+
+      if (count === 7) {
+        (0,_dom__WEBPACK_IMPORTED_MODULE_5__.enabledElement)(this.$resultCheckingButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
+        return;
+      }
+
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.disabledElement)(this.$resultCheckingButton, _constants__WEBPACK_IMPORTED_MODULE_3__.CLASS_NAME.DISABLED);
     }
   }, {
     key: "purchasedLottoListSectionBindEvent",
     value: function purchasedLottoListSectionBindEvent() {
       this.$lottoListToggleButton = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.LOTTO_LIST_TOGGLE_BUTTON);
+      this.$winningNumbers = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElements)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.WINNING_NUMBERS);
       (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$lottoListToggleButton, 'click', this.onClickToggleButton.bind(this));
     }
   }, {
     key: "lastWeekWinningNumberSectionBindEvent",
     value: function lastWeekWinningNumberSectionBindEvent() {
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.RESULT_CHECKING_BUTTON), 'click', this.onSubmitLottoResultButton.bind(this));
-      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindsEventListener)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.WINNING_NUMBER_CONTAINER), 'keyup', this.onKeyUpLastWeekNumberInput.bind(this));
+      this.$resultCheckingButton = (0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.RESULT_CHECKING_BUTTON);
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindEventListener)(this.$resultCheckingButton, 'click', this.onSubmitLottoResultButton.bind(this));
+      (0,_dom__WEBPACK_IMPORTED_MODULE_5__.bindsEventListener)((0,_dom__WEBPACK_IMPORTED_MODULE_5__.getElement)(_constants__WEBPACK_IMPORTED_MODULE_3__.SELECTOR.WINNING_NUMBER_CONTAINER), 'keyup', this.onKeyUpLastWeekWinningNumberInput.bind(this));
     }
   }, {
     key: "resultSectionBindEvent",
@@ -235,8 +248,10 @@ var LottoConsumer = /*#__PURE__*/function () {
     value: function setLottoList(count) {
       var _this = this;
 
-      _classPrivateFieldSet(this, _lottoList, Array(count).fill(0).map(function (_, index, list) {
-        return list[index] = _this.createLottoList(count);
+      _classPrivateFieldSet(this, _lottoList, Array.from({
+        length: count
+      }, function () {
+        return _this.createLottoList(count);
       }));
     }
   }, {
@@ -248,8 +263,10 @@ var LottoConsumer = /*#__PURE__*/function () {
     key: "createLottoList",
     value: function createLottoList() {
       var shuffleRandomList = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.shuffleArray)((0,_utils__WEBPACK_IMPORTED_MODULE_0__.createRandomNumberList)());
-      return Array(_constants__WEBPACK_IMPORTED_MODULE_1__.LOTTO.LENGTH).fill(0).map(function (_, index, list) {
-        return list[index] = shuffleRandomList.pop();
+      return Array.from({
+        length: _constants__WEBPACK_IMPORTED_MODULE_1__.LOTTO.LENGTH
+      }, function () {
+        return shuffleRandomList.pop();
       });
     }
   }]);
@@ -296,13 +313,11 @@ function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { 
 
 
 
-var _lastWeekLottoList = /*#__PURE__*/new WeakMap();
+var _lastWeekWinningLottoList = /*#__PURE__*/new WeakMap();
 
-var _lastWeekBonusNumber = /*#__PURE__*/new WeakMap();
+var _lastWeekWinningBonusNumber = /*#__PURE__*/new WeakMap();
 
 var _purchasedAmount = /*#__PURE__*/new WeakMap();
-
-var _winningAmount = /*#__PURE__*/new WeakMap();
 
 var _winningCount = /*#__PURE__*/new WeakMap();
 
@@ -310,12 +325,12 @@ var LottoSeller = /*#__PURE__*/function () {
   function LottoSeller() {
     _classCallCheck(this, LottoSeller);
 
-    _classPrivateFieldInitSpec(this, _lastWeekLottoList, {
+    _classPrivateFieldInitSpec(this, _lastWeekWinningLottoList, {
       writable: true,
       value: []
     });
 
-    _classPrivateFieldInitSpec(this, _lastWeekBonusNumber, {
+    _classPrivateFieldInitSpec(this, _lastWeekWinningBonusNumber, {
       writable: true,
       value: 0
     });
@@ -323,18 +338,6 @@ var LottoSeller = /*#__PURE__*/function () {
     _classPrivateFieldInitSpec(this, _purchasedAmount, {
       writable: true,
       value: 0
-    });
-
-    _classPrivateFieldInitSpec(this, _winningAmount, {
-      writable: true,
-      value: Object.freeze({
-        firstWinner: 2000000000,
-        secondWinner: 30000000,
-        thirdWinner: 1500000,
-        forthWinner: 50000,
-        fifthWinner: 5000,
-        failed: 0
-      })
     });
 
     _classPrivateFieldInitSpec(this, _winningCount, {
@@ -351,29 +354,29 @@ var LottoSeller = /*#__PURE__*/function () {
   }
 
   _createClass(LottoSeller, [{
-    key: "getLastWeekLottoList",
-    value: function getLastWeekLottoList() {
-      return _classPrivateFieldGet(this, _lastWeekLottoList);
+    key: "getLastWeekWinningLottoList",
+    value: function getLastWeekWinningLottoList() {
+      return _classPrivateFieldGet(this, _lastWeekWinningLottoList);
     }
   }, {
-    key: "getLastWeekBonusNumber",
-    value: function getLastWeekBonusNumber() {
-      return _classPrivateFieldGet(this, _lastWeekBonusNumber);
+    key: "getLastWeekWinningBonusNumber",
+    value: function getLastWeekWinningBonusNumber() {
+      return _classPrivateFieldGet(this, _lastWeekWinningBonusNumber);
     }
   }, {
-    key: "setLastWeekLottoNumbers",
-    value: function setLastWeekLottoNumbers(_ref) {
+    key: "setLastWeekWinningLottoNumbers",
+    value: function setLastWeekWinningLottoNumbers(_ref) {
       var winningNumberList = _ref.winningNumberList,
           bonusNumber = _ref.bonusNumber;
 
-      _classPrivateFieldSet(this, _lastWeekLottoList, winningNumberList);
+      _classPrivateFieldSet(this, _lastWeekWinningLottoList, winningNumberList);
 
-      _classPrivateFieldSet(this, _lastWeekBonusNumber, bonusNumber);
+      _classPrivateFieldSet(this, _lastWeekWinningBonusNumber, bonusNumber);
     }
   }, {
     key: "getWinningAmount",
     value: function getWinningAmount() {
-      return _classPrivateFieldGet(this, _winningAmount);
+      return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT;
     }
   }, {
     key: "setPurchasedAmount",
@@ -392,7 +395,7 @@ var LottoSeller = /*#__PURE__*/function () {
 
       Object.keys(_classPrivateFieldGet(this, _winningCount)).forEach(function (winningKey) {
         _classPrivateFieldGet(_this, _winningCount)[winningKey] = userAllLottoList.filter(function (userLottoList) {
-          return _this.confirmLottoList(userLottoList, lastWeekLottoList, lastWeekBounsNumber) === _classPrivateFieldGet(_this, _winningAmount)[winningKey];
+          return _this.confirmLottoList(userLottoList, lastWeekLottoList, lastWeekBounsNumber) === _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT[(0,_utils__WEBPACK_IMPORTED_MODULE_0__.changeToUpperSnakeCase)(winningKey)];
         }).length;
       });
     }
@@ -406,35 +409,34 @@ var LottoSeller = /*#__PURE__*/function () {
     value: function confirmLottoList(userLottoList, lastWeekLottoList, lastWeekBounsNumber) {
       var count = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.countingDuplicates)(userLottoList, lastWeekLottoList);
 
-      if (count === 2 || count === 1 || count === 0) {
-        return _classPrivateFieldGet(this, _winningAmount).failed;
-      }
+      switch (count) {
+        case 3:
+          return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT.FIFTH_WINNER;
 
-      if (count === 3) {
-        return _classPrivateFieldGet(this, _winningAmount).fifthWinner;
-      }
+        case 4:
+          return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT.FORTH_WINNER;
 
-      if (count === 4) {
-        return _classPrivateFieldGet(this, _winningAmount).forthWinner;
-      }
+        case 5:
+          if (userLottoList.includes(lastWeekBounsNumber)) {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT.SECOND_WINNER;
+          }
 
-      if (count === 5 && userLottoList.includes(lastWeekBounsNumber)) {
-        return _classPrivateFieldGet(this, _winningAmount).secondWinner;
-      }
+          return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT.THIRD_WINNER;
 
-      if (count === 5) {
-        return _classPrivateFieldGet(this, _winningAmount).thirdWinner;
-      }
+        case 6:
+          return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT.FIRST_WINNER;
 
-      return _classPrivateFieldGet(this, _winningAmount).firstWinner;
+        default:
+          return _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT.FAILED;
+      }
     }
   }, {
     key: "totalWinningAmount",
     value: function totalWinningAmount() {
       var _this2 = this;
 
-      var totalAmountList = Object.keys(_classPrivateFieldGet(this, _winningAmount)).map(function (amountKey) {
-        return _classPrivateFieldGet(_this2, _winningAmount)[amountKey] * _classPrivateFieldGet(_this2, _winningCount)[amountKey];
+      var totalAmountList = Object.keys(_classPrivateFieldGet(this, _winningCount)).map(function (amountKey) {
+        return _classPrivateFieldGet(_this2, _winningCount)[amountKey] * _constants__WEBPACK_IMPORTED_MODULE_1__.WINNING_AMOUNT[(0,_utils__WEBPACK_IMPORTED_MODULE_0__.changeToUpperSnakeCase)(amountKey)];
       });
       return totalAmountList.reduce(function (sum, amount) {
         return amount + sum;
@@ -461,6 +463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "CLASS_NAME": () => (/* binding */ CLASS_NAME),
 /* harmony export */   "MONEY": () => (/* binding */ MONEY),
 /* harmony export */   "LOTTO": () => (/* binding */ LOTTO),
+/* harmony export */   "WINNING_AMOUNT": () => (/* binding */ WINNING_AMOUNT),
 /* harmony export */   "ERROR_MESSAGE": () => (/* binding */ ERROR_MESSAGE)
 /* harmony export */ });
 var SELECTOR = {
@@ -480,7 +483,8 @@ var SELECTOR = {
   LAST_WEEK_BONUS_NUMBER_INPUT: '.last-week-bonus-number-input',
   RESTART_BUTTON: '#restart-button',
   EXIT_BUTTON: '#exit-button',
-  WINNING_NUMBER_CONTAINER: '.winning-number-container'
+  WINNING_NUMBER_CONTAINER: '.winning-number-container',
+  WINNING_NUMBERS: '.winning-numbers'
 };
 var CLASS_NAME = {
   DISABLED: 'disabled',
@@ -496,6 +500,14 @@ var LOTTO = {
   MIN_NUMBER: 1,
   MAX_NUMBER: 45,
   LENGTH: 6
+};
+var WINNING_AMOUNT = {
+  FIRST_WINNER: 2000000000,
+  SECOND_WINNER: 30000000,
+  THIRD_WINNER: 1500000,
+  FORTH_WINNER: 50000,
+  FIFTH_WINNER: 5000,
+  FAILED: 0
 };
 var ERROR_MESSAGE = {
   MONEY_OUT_OF_RANGE: "\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC798\uBABB \uC785\uB825 \uD558\uC168\uC2B5\uB2C8\uB2E4. \uAD6C\uC785\uD560 \uAE08\uC561\uC740 ".concat(MONEY.STANDARD, "\uC6D0 \uC774\uC0C1\uC744 \uC785\uB825\uD574\uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4"),
@@ -515,15 +527,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getElement": () => (/* binding */ getElement),
 /* harmony export */   "getElements": () => (/* binding */ getElements),
-/* harmony export */   "alertMessage": () => (/* binding */ alertMessage),
-/* harmony export */   "removeChildElement": () => (/* binding */ removeChildElement),
-/* harmony export */   "toggleClassName": () => (/* binding */ toggleClassName),
+/* harmony export */   "toggleElement": () => (/* binding */ toggleElement),
 /* harmony export */   "disableElement": () => (/* binding */ disableElement),
+/* harmony export */   "removeChildElements": () => (/* binding */ removeChildElements),
+/* harmony export */   "disabledElement": () => (/* binding */ disabledElement),
+/* harmony export */   "enabledElement": () => (/* binding */ enabledElement),
+/* harmony export */   "enabledElements": () => (/* binding */ enabledElements),
+/* harmony export */   "disabledElements": () => (/* binding */ disabledElements),
 /* harmony export */   "focusInput": () => (/* binding */ focusInput),
 /* harmony export */   "initInput": () => (/* binding */ initInput),
+/* harmony export */   "alertMessage": () => (/* binding */ alertMessage),
 /* harmony export */   "render": () => (/* binding */ render),
 /* harmony export */   "bindEventListener": () => (/* binding */ bindEventListener),
-/* harmony export */   "bindsEventListener": () => (/* binding */ bindsEventListener)
+/* harmony export */   "bindsEventListener": () => (/* binding */ bindsEventListener),
+/* harmony export */   "changeBackgroundColor": () => (/* binding */ changeBackgroundColor)
 /* harmony export */ });
 var getElement = function getElement(selector) {
   return document.querySelector(selector);
@@ -531,17 +548,36 @@ var getElement = function getElement(selector) {
 var getElements = function getElements(selector) {
   return document.querySelectorAll(selector);
 };
-var alertMessage = function alertMessage(message) {
-  return alert(message);
-};
-var removeChildElement = function removeChildElement(parentElement, childElement) {
-  return parentElement.removeChild(childElement);
-};
-var toggleClassName = function toggleClassName(element, domString) {
-  element.classList.toggle(domString);
+var toggleElement = function toggleElement(element, className) {
+  element.classList.toggle(className);
 };
 var disableElement = function disableElement(element) {
   element.disabled = !element.disabled;
+};
+var removeChildElements = function removeChildElements(parentElement, childElements) {
+  childElements.forEach(function (childElement) {
+    parentElement.removeChild(childElement);
+  });
+};
+var disabledElement = function disabledElement(element, className) {
+  element.classList.add(className);
+  element.disabled = true;
+};
+var enabledElement = function enabledElement(element, className) {
+  element.classList.remove(className);
+  element.disabled = false;
+};
+var enabledElements = function enabledElements(elements, className) {
+  elements.forEach(function (element) {
+    toggleElement(element, className);
+    disableElement(element);
+  });
+};
+var disabledElements = function disabledElements(elements, className) {
+  elements.forEach(function (element) {
+    toggleElement(element, className);
+    disableElement(element);
+  });
 };
 var focusInput = function focusInput(element) {
   return element.focus();
@@ -549,6 +585,9 @@ var focusInput = function focusInput(element) {
 var initInput = function initInput(inputElement) {
   inputElement.value = '';
   inputElement.focus();
+};
+var alertMessage = function alertMessage(message) {
+  return alert(message);
 };
 var render = function render(element, template) {
   element.insertAdjacentHTML('beforeend', template);
@@ -558,6 +597,13 @@ var bindEventListener = function bindEventListener(selector, type, callback) {
 };
 var bindsEventListener = function bindsEventListener(parentElement, type, callback) {
   parentElement.addEventListener(type, callback);
+};
+var changeBackgroundColor = function changeBackgroundColor(_ref) {
+  var element = _ref.element,
+      addClassName = _ref.addClassName,
+      removeClassName = _ref.removeClassName;
+  element.classList.add(addClassName);
+  element.classList.remove(removeClassName);
 };
 
 /***/ }),
@@ -574,7 +620,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var createTemplate = {
   paymentSection: function paymentSection() {
-    return "\n    <h1>\uD83C\uDFB1 \uD589\uC6B4\uC758 \uB85C\uB610</h1>\n    <section id=\"payment-section\">\n      <h2 hidden>\uAD6C\uC785\uD560 \uAE08\uC561</h2>\n      <label for=\"payment-input\">\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n      <form class=\"payment-form\">\n        <input name=\"payment-input\" id=\"payment-input\" type=\"number\" placeholder=\"\uAE08\uC561\" min=\"1000\" autofocus />\n        <button id=\"payment-button\">\uAD6C\uC785</button>\n      </form>\n    </section>\n    ";
+    return "\n    <h1>\uD83C\uDFB1 \uD589\uC6B4\uC758 \uB85C\uB610</h1>\n    <section id=\"payment-section\">\n      <h2 hidden>\uAD6C\uC785\uD560 \uAE08\uC561</h2>\n      <label for=\"payment-input\">\uAD6C\uC785\uD560 \uAE08\uC561\uC744 \uC785\uB825\uD574\uC8FC\uC138\uC694.</label>\n      <form class=\"payment-form\">\n        <input name=\"payment-input\" id=\"payment-input\" type=\"number\" placeholder=\"\uAE08\uC561\" min=\"1000\" step=\"1000\" required autofocus />\n        <button id=\"payment-button\">\uAD6C\uC785</button>\n      </form>\n    </section>\n    ";
   },
   purchasedSection: function purchasedSection(lottoList) {
     var _this = this;
@@ -587,7 +633,7 @@ var createTemplate = {
     return "\n    <li class=\"lotto\">\n      <p class=\"lotto-ticket\">\uD83C\uDF9F\uFE0F</p>\n      <p class=\"lotto-number invisible\">".concat(lotto.join(', '), "</p>\n    </li>\n    ");
   },
   lastWeekWinningNumberSection: function lastWeekWinningNumberSection() {
-    return "\n    <section id=\"last-week-winning-number-section\">\n      <h2 hidden>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638</h2>\n      <p>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638 6\uAC1C\uC640 \uBCF4\uB108\uC2A4 \uBC88\uD638 1\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</p>\n      <form class=\"winning-number-form\">\n        <div class=\"winning-number-container\">\n          <div class=\"\">\n            <p>\uB2F9\uCCA8 \uBC88\uD638</p>\n            <ul id=\"last-week-number-list\">\n              <li class=\"last-week-number\">\n                <label for=\"last-week-first-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uCCAB \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-first-input\" class=\"last-week-number-input\" data-input-id=\"1\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-second-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB450 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-second-input\" class=\"last-week-number-input\" data-input-id=\"2\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-third-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uC138 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-third-input\" class=\"last-week-number-input\" data-input-id=\"3\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-forth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB124 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-forth-input\" class=\"last-week-number-input\" data-input-id=\"4\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-fifth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB2E4\uC12F \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-fifth-input\" class=\"last-week-number-input\" data-input-id=\"5\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-sixth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uC5EC\uC12F \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-sixth-input\" class=\"last-week-number-input\" data-input-id=\"6\" min=\"1\" max=\"45\" maxlength=\"2\" />\n              </li>\n            </ul>\n          </div>\n          <div class=\"last-week-bonus-number-container\">\n            <p>\uBCF4\uB108\uC2A4 \uBC88\uD638</p>\n            <label for=\"last-week-bonus-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uBCF4\uB108\uC2A4 \uBC88\uC9F8 \uBC88\uD638</label>\n            <input type=\"number\" class=\"last-week-bonus-number-input\" data-input-id=\"7\" min=\"1\" max=\"45\" maxlength=\"2\"  />\n          </div>\n        </div>\n        <button id=\"result-checking-button\">\uACB0\uACFC \uD655\uC778\uD558\uAE30</button>\n      </form>\n    </section>\n  ";
+    return "\n    <section id=\"last-week-winning-number-section\">\n      <h2 hidden>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638</h2>\n      <p>\uC9C0\uB09C \uC8FC \uB2F9\uCCA8 \uBC88\uD638 6\uAC1C\uC640 \uBCF4\uB108\uC2A4 \uBC88\uD638 1\uAC1C\uB97C \uC785\uB825\uD574\uC8FC\uC138\uC694.</p>\n      <form class=\"winning-number-form\">\n        <div class=\"winning-number-container\">\n          <div class=\"\">\n            <p>\uB2F9\uCCA8 \uBC88\uD638</p>\n            <ul id=\"last-week-number-list\">\n              <li class=\"last-week-number\">\n                <label for=\"last-week-first-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uCCAB \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-first-input\" class=\"last-week-number-input winning-numbers\" data-input-id=\"1\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-second-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB450 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-second-input\" class=\"last-week-number-input winning-numbers\" data-input-id=\"2\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-third-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uC138 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-third-input\" class=\"last-week-number-input winning-numbers\" data-input-id=\"3\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-forth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB124 \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-forth-input\" class=\"last-week-number-input winning-numbers\" data-input-id=\"4\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-fifth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uB2E4\uC12F \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-fifth-input\" class=\"last-week-number-input winning-numbers\" data-input-id=\"5\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n              </li>\n              <li class=\"last-week-number\">\n                <label for=\"last-week-sixth-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uC5EC\uC12F \uBC88\uC9F8 \uBC88\uD638</label>\n                <input type=\"number\" name=\"last-week-sixth-input\" class=\"last-week-number-input winning-numbers\" data-input-id=\"6\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n              </li>\n            </ul>\n          </div>\n          <div class=\"last-week-bonus-number-container\">\n            <p>\uBCF4\uB108\uC2A4 \uBC88\uD638</p>\n            <label for=\"last-week-bonus-input\" hidden>\uC9C0\uB09C\uC8FC \uB2F9\uCCA8 \uBCF4\uB108\uC2A4 \uBC88\uC9F8 \uBC88\uD638</label>\n            <input type=\"number\" class=\"last-week-bonus-number-input winning-numbers\" data-input-id=\"7\" min=\"1\" max=\"45\" maxlength=\"2\" required />\n          </div>\n        </div>\n        <button id=\"result-checking-button\" class=\"disabled\" disabled>\uACB0\uACFC \uD655\uC778\uD558\uAE30</button>\n      </form>\n    </section>\n  ";
   },
   lottoResultSection: function lottoResultSection(winningCount, rateOfReturn) {
     return "\n    <div id=\"cover-the-background\"></div>\n    <section id=\"lotto-result-section\">\n      <button id=\"exit-button\"></button>\n      <h2 hidden>\uAD6C\uB9E4\uD55C \uB85C\uB610 \uACB0\uACFC</h2>\n      <table>\n      <caption id=\"lotto-result-table-caption\">\n        \uD83C\uDFC6 \uB2F9\uCCA8 \uD1B5\uACC4 \uD83C\uDFC6\n      </caption>\n      <thead>\n          <tr>\n            <th>\uC77C\uCE58 \uAC2F\uC218</th>\n            <th>\uB2F9\uCCA8\uAE08</th>\n            <th>\uB2F9\uCCA8 \uAC2F\uC218</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr>\n            <td>3\uAC1C</td>\n            <td>5,000</td>\n            <td class=\"fifth-winning-count\">".concat(winningCount.fifthWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>4\uAC1C</td>\n            <td>50,000</td>\n            <td class=\"forth-winning-count\">").concat(winningCount.forthWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>5\uAC1C</td>\n            <td>1,500,000</td>\n            <td class=\"third-winning-count\">").concat(winningCount.thirdWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>5\uAC1C+\uBCF4\uB108\uC2A4\uBCFC</td>\n            <td>30,000,000</td>\n            <td class=\"second-winning-count\">").concat(winningCount.secondWinner, "\uAC1C</td>\n          </tr>\n          <tr>\n            <td>6\uAC1C</td>\n            <td>2,000,000,000</td>\n            <td class=\"first-winning-count\">").concat(winningCount.firstWinner, "\uAC1C</td>\n          </tr>\n        </tbody>\n        <tfoot>\n          <tr>\n            <td colspan=\"3\" class=\"rate-of-return\">\uB2F9\uC2E0\uC758 \uCD1D \uC218\uC775\uB960\uC740 ").concat(rateOfReturn, "%\uC785\uB2C8\uB2E4.</td>\n          </tr>\n        </tfoot>\n      </table>\n      <button id=\"restart-button\">\uB2E4\uC2DC \uC2DC\uC791\uD558\uAE30</button>\n    </section>\n    ");
@@ -616,9 +662,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "createRandomNumberList": () => (/* binding */ createRandomNumberList),
 /* harmony export */   "shuffleArray": () => (/* binding */ shuffleArray),
 /* harmony export */   "countingDuplicates": () => (/* binding */ countingDuplicates),
-/* harmony export */   "getRateOfReturn": () => (/* binding */ getRateOfReturn)
+/* harmony export */   "getRateOfReturn": () => (/* binding */ getRateOfReturn),
+/* harmony export */   "changeToUpperSnakeCase": () => (/* binding */ changeToUpperSnakeCase),
+/* harmony export */   "findDuplicateIndex": () => (/* binding */ findDuplicateIndex),
+/* harmony export */   "isUniqueWinningNumber": () => (/* binding */ isUniqueWinningNumber)
 /* harmony export */ });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./src/js/constants.js");
+/* harmony import */ var _dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom */ "./src/js/dom.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -630,6 +680,7 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 
 var isString = function isString(payment) {
@@ -716,6 +767,47 @@ var countingDuplicates = function countingDuplicates(userLottoList, lastWeekLott
 var getRateOfReturn = function getRateOfReturn(totalWinningAmount, purchasedAmount) {
   return Number(((totalWinningAmount - purchasedAmount) / purchasedAmount * 100).toFixed(2));
 };
+var changeToUpperSnakeCase = function changeToUpperSnakeCase(string) {
+  return string.split('').map(function (character) {
+    if (character === character.toUpperCase()) {
+      return "_".concat(character.toUpperCase());
+    }
+
+    return character.toUpperCase();
+  }).join('');
+};
+var findDuplicateIndex = function findDuplicateIndex(checkWinningNumbers, winningNumber) {
+  return checkWinningNumbers.findIndex(function (checkWinningNumber) {
+    return checkWinningNumber === winningNumber;
+  });
+};
+var isUniqueWinningNumber = function isUniqueWinningNumber(_ref2) {
+  var winningNumberElements = _ref2.winningNumberElements,
+      winningNumberElement = _ref2.winningNumberElement,
+      previousWinningNumbers = _ref2.previousWinningNumbers,
+      currentWinningNumber = _ref2.currentWinningNumber;
+
+  if (!previousWinningNumbers.includes(currentWinningNumber)) {
+    (0,_dom__WEBPACK_IMPORTED_MODULE_1__.changeBackgroundColor)({
+      element: winningNumberElement,
+      addClassName: 'background-color-white',
+      removeClassName: 'background-color-red'
+    });
+    return true;
+  }
+
+  (0,_dom__WEBPACK_IMPORTED_MODULE_1__.changeBackgroundColor)({
+    element: winningNumberElements[findDuplicateIndex(previousWinningNumbers, currentWinningNumber)],
+    addClassName: 'background-color-red',
+    removeClassName: 'background-color-white'
+  });
+  (0,_dom__WEBPACK_IMPORTED_MODULE_1__.changeBackgroundColor)({
+    element: winningNumberElement,
+    addClassName: 'background-color-red',
+    removeClassName: 'background-color-white'
+  });
+  return false;
+};
 
 /***/ }),
 
@@ -749,7 +841,7 @@ var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_g
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_1___);
 var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()(___CSS_LOADER_URL_IMPORT_2___);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "/* font Roboto */\n/* reset css */\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  background-color: #e5e5e5;\n  height: 100vh;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n\n  cursor: default;\n}\n\n#payment-section .payment-form #payment-button.disabled:hover {\n  background-color: #828282;\n  opacity: 0.6;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  position: relative;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  height: 727px;\n  width: 414px;\n  padding: 52px 16px;\n\n  overflow: scroll;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n\n  padding: 8px 8px;\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: #8b8b8b;\n\n  margin: 0 10px;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#lotto-result-section #restart-button,\n#payment-section .payment-form #payment-button,\n#last-week-winning-number-section #result-checking-button {\n  font-weight: 700;\n  font-size: 14px;\n  color: white;\n\n  background-color: #00bcd4;\n\n  border-radius: 4px;\n  transition: all 300ms ease-in-out;\n}\n\n#lotto-result-section #restart-button:hover,\n#payment-section .payment-form #payment-button:hover,\n#last-week-winning-number-section #result-checking-button:hover {\n  background-color: #80deea;\n}\n\n#lotto-result-section #restart-button:active,\n#payment-section .payment-form #payment-button:active,\n#last-week-winning-number-section #result-checking-button:active {\n  transform: translateY(2px);\n}\n\n#lotto-result-section #restart-button:focus {\n  outline: none;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n\n  gap: 8px;\n  max-width: 320px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  transition: all 300ms ease-in-out;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:hover,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:hover {\n  opacity: 85%;\n  transform: scale(1.05);\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:active,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:active {\n  transform: translateY(1px);\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  text-align: center;\n\n  width: 34px;\n  height: 36px;\n  padding: 0;\n\n  border-radius: 4px;\n}\n\n#last-week-winning-number-section #result-checking-button {\n  width: 100%;\n  margin-top: 24px;\n  height: 36px;\n  padding: 6px 6px 8px;\n}\n\n/* ******************** */\n/* lotto-result-section */\n/* ******************** */\n#lotto-result-section {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n\n  width: 350px;\n  height: 500px;\n\n  padding: 0 16px;\n\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n\n  border: 1px solid black;\n  border-radius: 4px;\n}\n\n#lotto-result-section #exit-button {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n\n  position: absolute;\n  top: 16px;\n  right: 16px;\n\n  width: 14px;\n  height: 14px;\n}\n\n#lotto-result-section table {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n\n  width: 100%;\n  margin-bottom: 32px;\n}\n\n#lotto-result-section table #lotto-result-table-caption {\n  font-size: 20px;\n  font-weight: 600;\n  line-height: 24px;\n  letter-spacing: 0.15px;\n\n  margin: 40px 0 32px;\n}\n\n#lotto-result-section table thead {\n  font-weight: 600;\n}\n\n#lotto-result-section table tr {\n  border-top: 1px solid #dcdcdc;\n  border-bottom: 1px solid #dcdcdc;\n}\n\n#lotto-result-section table th,\n#lotto-result-section table td {\n  text-align: center;\n  padding: 8px 0;\n}\n\n#lotto-result-section table tfoot td {\n  font-weight: 600;\n  padding: 16px 0 0;\n}\n\n#lotto-result-section table tfoot tr {\n  border-bottom: none;\n}\n\n#lotto-result-section #restart-button {\n  display: block;\n\n  line-height: 16px;\n  letter-spacing: 1.25px;\n\n  width: 152px;\n  height: 36px;\n\n  padding: 6px 6px 6px 8px;\n  margin: 32px auto 49px;\n}\n\n/* ******************** */\n/* cover-the-background */\n/* ******************** */\n#cover-the-background {\n  position: fixed;\n\n  top: 50%;\n  left: 50%;\n\n  transform: translate(-50%, -50%);\n\n  height: 727px;\n  width: 414px;\n\n  background-color: rgba(0, 0, 0, 0.5);\n}\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"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","sourcesContent":["/* font Roboto */\n@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');\n/* reset css */\n@import url('https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css');\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  background-color: #e5e5e5;\n  height: 100vh;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n\n  cursor: default;\n}\n\n#payment-section .payment-form #payment-button.disabled:hover {\n  background-color: #828282;\n  opacity: 0.6;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  position: relative;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  height: 727px;\n  width: 414px;\n  padding: 52px 16px;\n\n  overflow: scroll;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n\n  padding: 8px 8px;\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: #8b8b8b;\n\n  margin: 0 10px;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#lotto-result-section #restart-button,\n#payment-section .payment-form #payment-button,\n#last-week-winning-number-section #result-checking-button {\n  font-weight: 700;\n  font-size: 14px;\n  color: white;\n\n  background-color: #00bcd4;\n\n  border-radius: 4px;\n  transition: all 300ms ease-in-out;\n}\n\n#lotto-result-section #restart-button:hover,\n#payment-section .payment-form #payment-button:hover,\n#last-week-winning-number-section #result-checking-button:hover {\n  background-color: #80deea;\n}\n\n#lotto-result-section #restart-button:active,\n#payment-section .payment-form #payment-button:active,\n#last-week-winning-number-section #result-checking-button:active {\n  transform: translateY(2px);\n}\n\n#lotto-result-section #restart-button:focus {\n  outline: none;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n\n  gap: 8px;\n  max-width: 320px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n\n  background-image: url('../../images/toggle_off.svg');\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url('../../images/toggle_on.svg');\n  transition: all 300ms ease-in-out;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:hover,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:hover {\n  opacity: 85%;\n  transform: scale(1.05);\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:active,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:active {\n  transform: translateY(1px);\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  text-align: center;\n\n  width: 34px;\n  height: 36px;\n  padding: 0;\n\n  border-radius: 4px;\n}\n\n#last-week-winning-number-section #result-checking-button {\n  width: 100%;\n  margin-top: 24px;\n  height: 36px;\n  padding: 6px 6px 8px;\n}\n\n/* ******************** */\n/* lotto-result-section */\n/* ******************** */\n#lotto-result-section {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n\n  width: 350px;\n  height: 500px;\n\n  padding: 0 16px;\n\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n\n  border: 1px solid black;\n  border-radius: 4px;\n}\n\n#lotto-result-section #exit-button {\n  background-image: url('../../images/exit_button.svg');\n\n  position: absolute;\n  top: 16px;\n  right: 16px;\n\n  width: 14px;\n  height: 14px;\n}\n\n#lotto-result-section table {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n\n  width: 100%;\n  margin-bottom: 32px;\n}\n\n#lotto-result-section table #lotto-result-table-caption {\n  font-size: 20px;\n  font-weight: 600;\n  line-height: 24px;\n  letter-spacing: 0.15px;\n\n  margin: 40px 0 32px;\n}\n\n#lotto-result-section table thead {\n  font-weight: 600;\n}\n\n#lotto-result-section table tr {\n  border-top: 1px solid #dcdcdc;\n  border-bottom: 1px solid #dcdcdc;\n}\n\n#lotto-result-section table th,\n#lotto-result-section table td {\n  text-align: center;\n  padding: 8px 0;\n}\n\n#lotto-result-section table tfoot td {\n  font-weight: 600;\n  padding: 16px 0 0;\n}\n\n#lotto-result-section table tfoot tr {\n  border-bottom: none;\n}\n\n#lotto-result-section #restart-button {\n  display: block;\n\n  line-height: 16px;\n  letter-spacing: 1.25px;\n\n  width: 152px;\n  height: 36px;\n\n  padding: 6px 6px 6px 8px;\n  margin: 32px auto 49px;\n}\n\n/* ******************** */\n/* cover-the-background */\n/* ******************** */\n#cover-the-background {\n  position: fixed;\n\n  top: 50%;\n  left: 50%;\n\n  transform: translate(-50%, -50%);\n\n  height: 727px;\n  width: 414px;\n\n  background-color: rgba(0, 0, 0, 0.5);\n}\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "/* font Roboto */\n/* reset css */\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  background-color: #e5e5e5;\n  height: 100vh;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput:invalid {\n  border-color: rgb(250, 105, 105);\n  background-color: rgb(254, 234, 234);\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:valid,\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n.background-color-red {\n  background-color: rgb(254, 234, 234);\n}\n\n.background-color-white {\n  background-color: #fff;\n}\n\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button.disabled,\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n\n  cursor: default;\n}\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button.disabled:hover,\n#payment-section .payment-form #payment-button.disabled:hover {\n  background-color: #828282;\n  opacity: 0.6;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  position: relative;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  height: 727px;\n  width: 414px;\n  padding: 52px 16px;\n\n  overflow: scroll;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n\n  padding: 8px 8px;\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: #8b8b8b;\n\n  margin: 0 10px;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#lotto-result-section #restart-button,\n#payment-section .payment-form #payment-button,\n#last-week-winning-number-section .winning-number-form #result-checking-button {\n  font-weight: 700;\n  font-size: 14px;\n  color: white;\n\n  background-color: #00bcd4;\n\n  border-radius: 4px;\n  transition: all 300ms ease-in-out;\n}\n\n#lotto-result-section #restart-button:hover,\n#payment-section .payment-form #payment-button:hover,\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button:hover {\n  background-color: #80deea;\n}\n\n#lotto-result-section #restart-button:active,\n#payment-section .payment-form #payment-button:active,\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button:active {\n  transform: translateY(2px);\n}\n\n#lotto-result-section #restart-button:focus {\n  outline: none;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n\n  gap: 8px;\n  max-width: 320px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\n  transition: all 300ms ease-in-out;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:hover,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:hover {\n  opacity: 85%;\n  transform: scale(1.05);\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:active,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:active {\n  transform: translateY(1px);\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  text-align: center;\n\n  width: 34px;\n  height: 36px;\n  padding: 0;\n\n  border-radius: 4px;\n}\n\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button.disabled,\n#last-week-winning-number-section .winning-number-form #result-checking-button {\n  width: 100%;\n  margin-top: 24px;\n  height: 36px;\n  padding: 6px 6px 8px;\n}\n\n/* ******************** */\n/* lotto-result-section */\n/* ******************** */\n#lotto-result-section {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n\n  width: 350px;\n  height: 500px;\n\n  padding: 0 16px;\n\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n\n  border: 1px solid black;\n  border-radius: 4px;\n}\n\n#lotto-result-section #exit-button {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\n\n  position: absolute;\n  top: 16px;\n  right: 16px;\n\n  width: 14px;\n  height: 14px;\n}\n\n#lotto-result-section table {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n\n  width: 100%;\n  margin-bottom: 32px;\n}\n\n#lotto-result-section table #lotto-result-table-caption {\n  font-size: 20px;\n  font-weight: 600;\n  line-height: 24px;\n  letter-spacing: 0.15px;\n\n  margin: 40px 0 32px;\n}\n\n#lotto-result-section table thead {\n  font-weight: 600;\n}\n\n#lotto-result-section table tr {\n  border-top: 1px solid #dcdcdc;\n  border-bottom: 1px solid #dcdcdc;\n}\n\n#lotto-result-section table th,\n#lotto-result-section table td {\n  text-align: center;\n  padding: 8px 0;\n}\n\n#lotto-result-section table tfoot td {\n  font-weight: 600;\n  padding: 16px 0 0;\n}\n\n#lotto-result-section table tfoot tr {\n  border-bottom: none;\n}\n\n#lotto-result-section #restart-button {\n  display: block;\n\n  line-height: 16px;\n  letter-spacing: 1.25px;\n\n  width: 152px;\n  height: 36px;\n\n  padding: 6px 6px 6px 8px;\n  margin: 32px auto 49px;\n}\n\n/* ******************** */\n/* cover-the-background */\n/* ******************** */\n#cover-the-background {\n  position: fixed;\n\n  top: 50%;\n  left: 50%;\n\n  transform: translate(-50%, -50%);\n\n  height: 727px;\n  width: 414px;\n\n  background-color: rgba(0, 0, 0, 0.5);\n}\n", "",{"version":3,"sources":["webpack://./src/css/index.css"],"names":[],"mappings":"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","sourcesContent":["/* font Roboto */\n@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');\n/* reset css */\n@import url('https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css');\n\n* {\n  box-sizing: border-box;\n}\n\nhtml {\n  font-family: 'Roboto', sans-serif;\n}\n\nbody {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n\n  background-color: #e5e5e5;\n  height: 100vh;\n}\n\n/* ****** */\n/* COMMON */\n/* ****** */\np,\nlabel {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: rgba(0, 0, 0, 0.87);\n}\n\ninput {\n  border: 1px solid #b4b4b4;\n}\n\ninput:invalid {\n  border-color: rgb(250, 105, 105);\n  background-color: rgb(254, 234, 234);\n}\n\ninput::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n}\n\ninput:valid,\ninput:focus {\n  outline: 1px solid #00bcd4;\n  border: none;\n}\n\nbutton {\n  background: inherit;\n  border: none;\n  box-shadow: none;\n  padding: 0;\n  overflow: visible;\n  cursor: pointer;\n}\n\n.invisible {\n  display: none;\n}\n\n.background-color-red {\n  background-color: rgb(254, 234, 234);\n}\n\n.background-color-white {\n  background-color: #fff;\n}\n\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button.disabled,\n#payment-section .payment-form #payment-button.disabled {\n  background-color: #828282;\n  opacity: 0.6;\n\n  cursor: default;\n}\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button.disabled:hover,\n#payment-section .payment-form #payment-button.disabled:hover {\n  background-color: #828282;\n  opacity: 0.6;\n}\n\n#app {\n  display: flex;\n  flex-direction: column;\n\n  position: relative;\n\n  border: 1px solid rgba(0, 0, 0, 0.12);\n  border-radius: 4px;\n  background-color: white;\n\n  height: 727px;\n  width: 414px;\n  padding: 52px 16px;\n\n  overflow: scroll;\n}\n\nh1 {\n  font-size: 34px;\n  font-weight: 600;\n  line-height: 36px;\n  text-align: center;\n\n  margin-bottom: 16px;\n}\n\n/* *************** */\n/* payment-section */\n/* *************** */\n#payment-section {\n  margin-bottom: 28px;\n}\n\n#payment-section label {\n  display: block;\n\n  margin-bottom: 4px;\n}\n\n#payment-section .payment-form {\n  display: flex;\n}\n\n#payment-section .payment-form #payment-input {\n  flex-grow: 1;\n\n  border-radius: 4px;\n\n  padding: 8px 8px;\n  margin-right: 16px;\n}\n\n#payment-section .payment-form #payment-input::placeholder {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n  color: #8b8b8b;\n\n  margin: 0 10px;\n}\n\n#payment-section .payment-form #payment-button {\n  width: 56px;\n  height: 36px;\n}\n\n#lotto-result-section #restart-button,\n#payment-section .payment-form #payment-button,\n#last-week-winning-number-section .winning-number-form #result-checking-button {\n  font-weight: 700;\n  font-size: 14px;\n  color: white;\n\n  background-color: #00bcd4;\n\n  border-radius: 4px;\n  transition: all 300ms ease-in-out;\n}\n\n#lotto-result-section #restart-button:hover,\n#payment-section .payment-form #payment-button:hover,\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button:hover {\n  background-color: #80deea;\n}\n\n#lotto-result-section #restart-button:active,\n#payment-section .payment-form #payment-button:active,\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button:active {\n  transform: translateY(2px);\n}\n\n#lotto-result-section #restart-button:focus {\n  outline: none;\n}\n\n/* **************************** */\n/* purchased-lotto-list section */\n/* **************************** */\n#purchased-lotto-list-section {\n  display: flex;\n  justify-content: space-between;\n\n  margin-bottom: 32px;\n}\n\n#purchased-lotto-list-section .lotto-list-container .purchased-total-count {\n  margin-bottom: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list {\n  display: flex;\n  flex-wrap: wrap;\n\n  gap: 8px;\n  max-width: 320px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list.direction-column {\n  flex-direction: column;\n\n  gap: 4px;\n}\n\n#purchased-lotto-list-section .lotto-list-container #lotto-list .lotto-ticket {\n  font-weight: 600;\n  font-size: 34px;\n  line-height: 36px;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex {\n  display: flex;\n  align-items: center;\n}\n\n#purchased-lotto-list-section\n  .lotto-list-container\n  #lotto-list\n  .lotto.display-flex\n  .lotto-ticket {\n  margin-right: 8px;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#purchased-lotto-list-section .lotto-list-toggle-container p {\n  margin-bottom: 12px;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button {\n  width: 34px;\n  height: 20px;\n\n  background-image: url('../../images/toggle_off.svg');\n  background-size: contain;\n  background-repeat: no-repeat;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch {\n  background-image: url('../../images/toggle_on.svg');\n  transition: all 300ms ease-in-out;\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:hover,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:hover {\n  opacity: 85%;\n  transform: scale(1.05);\n}\n\n#purchased-lotto-list-section #lotto-list-toggle-button:active,\n#purchased-lotto-list-section #lotto-list-toggle-button.toggle-switch:active {\n  transform: translateY(1px);\n}\n\n/* ******************************** */\n/* last-week-winning-number-section */\n/* ******************************** */\n#last-week-winning-number-section {\n  margin-bottom: 24px;\n}\n\n#last-week-winning-number-section p {\n  margin-bottom: 8px;\n}\n\n#last-week-winning-number-section .winning-number-container {\n  display: flex;\n  justify-content: space-between;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list {\n  display: flex;\n\n  gap: 8px;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-container {\n  display: flex;\n  flex-direction: column;\n  align-items: flex-end;\n}\n\n#last-week-winning-number-section\n  .winning-number-container\n  .last-week-bonus-number-input,\n#last-week-winning-number-section\n  .winning-number-container\n  #last-week-number-list\n  .last-week-number-input {\n  text-align: center;\n\n  width: 34px;\n  height: 36px;\n  padding: 0;\n\n  border-radius: 4px;\n}\n\n#last-week-winning-number-section\n  .winning-number-form\n  #result-checking-button.disabled,\n#last-week-winning-number-section .winning-number-form #result-checking-button {\n  width: 100%;\n  margin-top: 24px;\n  height: 36px;\n  padding: 6px 6px 8px;\n}\n\n/* ******************** */\n/* lotto-result-section */\n/* ******************** */\n#lotto-result-section {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n\n  width: 350px;\n  height: 500px;\n\n  padding: 0 16px;\n\n  transform: translate(-50%, -50%);\n  background-color: #fff;\n\n  border: 1px solid black;\n  border-radius: 4px;\n}\n\n#lotto-result-section #exit-button {\n  background-image: url('../../images/exit_button.svg');\n\n  position: absolute;\n  top: 16px;\n  right: 16px;\n\n  width: 14px;\n  height: 14px;\n}\n\n#lotto-result-section table {\n  font-size: 15px;\n  line-height: 24px;\n  letter-spacing: 0.5px;\n\n  width: 100%;\n  margin-bottom: 32px;\n}\n\n#lotto-result-section table #lotto-result-table-caption {\n  font-size: 20px;\n  font-weight: 600;\n  line-height: 24px;\n  letter-spacing: 0.15px;\n\n  margin: 40px 0 32px;\n}\n\n#lotto-result-section table thead {\n  font-weight: 600;\n}\n\n#lotto-result-section table tr {\n  border-top: 1px solid #dcdcdc;\n  border-bottom: 1px solid #dcdcdc;\n}\n\n#lotto-result-section table th,\n#lotto-result-section table td {\n  text-align: center;\n  padding: 8px 0;\n}\n\n#lotto-result-section table tfoot td {\n  font-weight: 600;\n  padding: 16px 0 0;\n}\n\n#lotto-result-section table tfoot tr {\n  border-bottom: none;\n}\n\n#lotto-result-section #restart-button {\n  display: block;\n\n  line-height: 16px;\n  letter-spacing: 1.25px;\n\n  width: 152px;\n  height: 36px;\n\n  padding: 6px 6px 6px 8px;\n  margin: 32px auto 49px;\n}\n\n/* ******************** */\n/* cover-the-background */\n/* ******************** */\n#cover-the-background {\n  position: fixed;\n\n  top: 50%;\n  left: 50%;\n\n  transform: translate(-50%, -50%);\n\n  height: 727px;\n  width: 414px;\n\n  background-color: rgba(0, 0, 0, 0.5);\n}\n"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
